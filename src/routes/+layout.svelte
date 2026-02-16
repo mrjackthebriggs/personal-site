@@ -1,6 +1,14 @@
 <script lang="ts">
 	import favicon from '$lib/assets/favicon.svg';
-
+	
+	const tabs = [
+		{href:"/",name:"Home"},
+		{href:"/resume",name:"Resume"},
+		{href:"/projects",name:"Projects"},
+		{href:"/politics",name:"Politics"},
+		{href:"/music",name:"Music"},
+		{href:"/skateboarding",name:"Skateboarding"}
+	]
 	const colorTheme = $state({
 		
 	});
@@ -14,39 +22,58 @@
 
 <style>
 /* base text settings, global specialisations bellow*/ 
-:global(h1,h2,h3,h4,h5){
-	padding: 5px 20px;
-	color: blue;
+@font-face {
+  font-family: 'Bungee';
+  src: url('$lib/fonts/Bungee-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
 }
-:global(p){
-	padding: 2px 20px;
+
+@font-face {
+  font-family: 'SpaceMono-reg';
+  src: url('$lib/fonts/SpaceMono-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
 }
-nav{
-	background-color: green;
-	padding: 15px;
-	margin: auto 15px;
-	border: 4px darkgreen solid;
-	border-radius: 40px 10px;
-	justify-content: space-around;
-}
-nav>a{
-	color: yellow;
-	margin: 0px 20px;    
-}
+
+	:global(h1,h2,h3,h4,h5){
+		padding: 5px 20px;
+		font-family:Bungee,Arial, Helvetica, sans-serif;
+	}
+	:global(p,a){
+		padding: 2px 20px;
+		font-family: SpaceMono-reg, sans-serif;
+	}
+	nav {
+			width: 90%;
+			padding: 5%;
+			border-bottom: 1px solid #ddd;
+			padding: 1rem 0;
+		}
+
+  nav>a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+  }
+
+  nav>a:hover {
+    color: #00a2ff; /* Svelte Orange */
+  }
+	footer{
+		padding: 40px 20px;
+		display: flex;
+    justify-content: center;
+	}
 </style>
 <nav>
-	<a href="/">Home</a>
-	<a href="/resume">Resume</a>
-	<a href="/projects">Projects</a>
-	<a href="/politics">Politics</a>
-	<a href="/music">Music</a>
-	<a href="/skateboarding">Skateboarding</a>
+		<!--need to fix scaling--> 
+		{#each tabs as {href,name}}
+		<a 
+		style="padding: 0% {(100/tabs.length)/3}%" 
+		href="{href}">{name}</a>
+		{/each}
 </nav>
-
-<h2>header </h2>
-<h3>header </h3>
-<h4>header </h4>
-<h5>header </h5>
 
 {@render children()}
 
