@@ -1,0 +1,1 @@
+<h1>Politics Page</h1>
