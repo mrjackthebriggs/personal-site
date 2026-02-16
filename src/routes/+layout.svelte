@@ -1,9 +1,9 @@
 <script lang="ts">
 	import favicon from '$lib/assets/favicon.svg';
 
-	const colorTheme = {
+	const colorTheme = $state({
 		
-	};
+	});
 
 	let { children } = $props();
 </script>
@@ -13,13 +13,13 @@
 </svelte:head>
 
 <style>
-/* need to find way to bleed down css? */ 
-:global(h1){
-	padding: 10px 20px;
+/* base text settings, global specialisations bellow*/ 
+:global(h1,h2,h3,h4,h5){
+	padding: 5px 20px;
 	color: blue;
 }
 :global(p){
-	padding: 5px 20px;
+	padding: 2px 20px;
 }
 nav{
 	background-color: green;
@@ -43,4 +43,15 @@ nav>a{
 	<a href="/skateboarding">Skateboarding</a>
 </nav>
 
+<h2>header </h2>
+<h3>header </h3>
+<h4>header </h4>
+<h5>header </h5>
+
 {@render children()}
+
+<footer>
+	Bungee font by 2023 The Bungee Project Authors
+	<br>
+	Space mono font by 2016 The Space Mono Project Authors
+</footer>
