@@ -14,9 +14,12 @@
 
 <style>
 /* need to find way to bleed down css? */ 
-h1{
-	margin: 10px;
+:global(h1){
+	padding: 10px 20px;
 	color: blue;
+}
+:global(p){
+	padding: 5px 20px;
 }
 nav{
 	background-color: green;
