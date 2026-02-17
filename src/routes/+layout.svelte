@@ -1,6 +1,8 @@
 <script lang="ts">
-	import favicon from '$lib/assets/favicon.svg';
 	import { page, navigating } from '$app/state';
+	
+	//image imports
+	import pic1 from '$lib/images/title-pictures/pic1.png';
 
 	let pageWidth = $state(0);
 	const tabs = [
@@ -11,6 +13,11 @@
 		{href:"/music",name:"Music"},
 		{href:"/skateboarding",name:"Skateboarding"}
 	]
+
+	const pageTitle = tabs.find((i) => i?.href === page.url.pathname)?.title
+	let pagePic = tabs.find((i) => i?.href === page.url.pathname)?.pic
+
+
 	const colorTheme = $state({
 		
 	});
@@ -19,7 +26,6 @@
 </script>
 
 <svelte:head>
-	<link rel="icon" href={favicon} />
 </svelte:head>
 <svelte:window bind:innerWidth={pageWidth} />
 <style>
@@ -44,9 +50,10 @@
   font-style: normal;
 }
 
-	:global(h1,h2,h3,h4,h5){
+	:global(.title){
 		padding: 5px 40px;
 		font-family:Bungee,Arial, Helvetica, sans-serif;
+		z-index: 2
 	}
 	:global(p,a){
 		padding: 2px 80px;
@@ -79,7 +86,26 @@
 		display: flex;
     justify-content: center;
 	}
+
+  :global(.page-title){
+    display:flex;
+    justify-content:left;
+    align-items: center;
+    margin: 0% 0% 0% 15%;
+  }
+
+  :global(.page-title h1){
+    text-align: left;
+  }
+
+  :global(.page-title img){
+    width: 150px; 
+    height: 150px;    
+    display: block;
+    padding: 20px 0px;
+  }
 </style>
+
 <nav>
 		<!--need to fix scaling--> 
 		{#each tabs as {href,name}}
@@ -91,9 +117,9 @@
 		{/each}
 </nav>
 
-<p></p>
-
-{@render children()}
+<main>
+	{@render children()}
+</main>
 
 <footer>
 	Bungee font by 2023 The Bungee Project Authors
