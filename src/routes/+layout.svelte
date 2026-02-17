@@ -45,11 +45,11 @@
 }
 
 	:global(h1,h2,h3,h4,h5){
-		padding: 5px 20px;
+		padding: 5px 40px;
 		font-family:Bungee,Arial, Helvetica, sans-serif;
 	}
 	:global(p,a){
-		padding: 2px 20px;
+		padding: 2px 80px;
 		font-family: SpaceMono-reg, sans-serif;
 	}
 	nav {
