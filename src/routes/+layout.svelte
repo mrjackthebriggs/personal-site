@@ -11,11 +11,10 @@
 		{href:"/projects",name:"Projects"},
 		{href:"/politics",name:"Politics"},
 		{href:"/music",name:"Music"},
+		{href:"/my-photos",name:"Photos"},
 		{href:"/skateboarding",name:"Skateboarding"}
 	]
 
-	const pageTitle = tabs.find((i) => i?.href === page.url.pathname)?.title
-	let pagePic = tabs.find((i) => i?.href === page.url.pathname)?.pic
 
 
 	const colorTheme = $state({
@@ -38,6 +37,13 @@
 }
 
 @font-face {
+  font-family: 'Bungee-Hollow';
+  src: url('$lib/fonts/BungeeShade-Regular.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
   font-family: 'SpaceMono-reg';
   src: url('$lib/fonts/SpaceMono-Regular.ttf') format('truetype');
   font-weight: normal;
@@ -50,18 +56,13 @@
   font-style: normal;
 }
 
-	:global(.title){
-		padding: 5px 40px;
-		font-family:Bungee,Arial, Helvetica, sans-serif;
-		z-index: 2
-	}
 	:global(p,a){
 		padding: 2px 80px;
 		font-family: SpaceMono-reg, sans-serif;
 	}
 	nav {
 			width: 90%;
-			padding: 5%;
+			margin: 0% 5% 0% 5%;
 			border-bottom: 1px solid #ddd;
 			padding: 1rem 0;
 		}
@@ -86,24 +87,6 @@
 		display: flex;
     justify-content: center;
 	}
-
-  :global(.page-title){
-    display:flex;
-    justify-content:left;
-    align-items: center;
-    margin: 0% 0% 0% 15%;
-  }
-
-  :global(.page-title h1){
-    text-align: left;
-  }
-
-  :global(.page-title img){
-    width: 150px; 
-    height: 150px;    
-    display: block;
-    padding: 20px 0px;
-  }
 </style>
 
 <nav>
@@ -111,8 +94,8 @@
 		{#each tabs as {href,name}}
 		<a 
 		aria-current={page.url.pathname === href}
-		style:padding={pageWidth/(tabs.length*4)}px
-		style:font-size= {pageWidth > 700 ? 16 : (((pageWidth)/tabs.length/8))}px
+		style:padding={pageWidth/(tabs.length*6)}px
+		style:font-size= {pageWidth > 700 ? 16 : (((pageWidth)/tabs.length/7))}px
 		href="{href}">{name}</a>
 		{/each}
 </nav>
