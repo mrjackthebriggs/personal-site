@@ -10,7 +10,7 @@
 <style>
   .title{
     rotate: -15deg;
-		margin: 13vh 0% 0% 10vw;
+		margin: 13vh 0% 0% 2vw;
     font-size: 46px;
 		font-family:Bungee,Arial, Helvetica, sans-serif;
 		z-index: 2;
@@ -51,7 +51,7 @@
     width: auto; 
     height: 150px;    
     display: block;
-    padding: 20px 0px;
+    padding: 0px 0px;
     justify-self: right;
     object-fit: cover;
     justify-self: start;
