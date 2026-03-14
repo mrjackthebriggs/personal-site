@@ -1,23 +1,47 @@
 <script lang="ts">
-
+  import { fly } from "svelte/transition";
 </script>
 
 <style>
-p, i, em, li, span{
-  white-space: pre-wrap;
+*{
   padding: 0px 0px;
-  font-family: sans-serif;
+  font-family: Noto-Sans,sans-serif;
+}
+h1, h2{
+  font-family: Special-Elite, Arial;
+}
+h3, h4{
+  font-family: Arial;
+}
+.resbody{
+  right:100px;
+  margin:0px 60px;
+  padding:60px 80px 60px 80px;
+  border:2px rgb(0, 0, 0) solid;
+  border-radius: 3px;
+  box-shadow: 5px 5px 8px rgb(60, 60, 60);
 }
 .linebreak{
-  margin:30px 20px;
+  margin:40px -30px;
   display: flex;
-  border: 2px black solid;
+  border: 1px rgb(141, 141, 141) solid;
+}
+.smalltext{
+  font-size: 14px;
 }
 </style>
 
-<div class="resbody">
+<div class="resbody"
+  in:fly={{y:25, x:200,duration:1000, delay:200}}
+  style="rotate:0.9deg;"
+>
 <h1>Jack Briggs</h1>
-<span><a href="tel:0412453957">0412 453 957</a> | <a href="mailto:jack.brig@proton.me" >E-mail</a> | LinkedIn | GitHub</span>
+<span>
+  <a href="tel:0412453957">0412 453 957</a> | 
+  <a href="mailto:jack.brig@proton.me">E-mail</a> | 
+  <a href="https://www.linkedin.com/in/mrjackthebriggs/" target="_blank">LinkedIn</a> | 
+  <a href="https://github.com/mrjackthebriggs" target="_blank">GitHub</a>
+</span>
 <span class="linebreak"></span>
 <h2>PROFILE:</h2>
 <p>
@@ -31,39 +55,40 @@ get along with. Always open and willing to consider new ideas, points of view, a
 <span class="linebreak"></span>
 <h2>EDUCATION:</h2>
 <p>
-Bachelor of Computer Science (Majoring in Software Engineering)
-Graduated on 02/2025
-Course GPA – 3.77
-Edith Cowan University
+<strong>Bachelor of Computer Science Major in Software Engineering</strong><br>
+<span class="smalltext">Edith Cowan University</span><br>
+<i class="smalltext">Graduated on 02/2025</i><br>
+<i class="smalltext">Course GPA – 3.77</i>
 </p>
 <span class="linebreak"></span>
 <h2>ADDITIONAL CERTIFICATIONS:</h2>
 <p>
-Learn Intermediate Python 3 Course
-Finished on 06/2024
-Codecademy
+<strong>Learn Intermediate Python 3 Course</strong><br>
+<span class="smalltext">Codecademy</span><br>
+<i class="smalltext">Finished on 06/2024</i>
 </p>
 <p>
-Responsive Web Design
-Finished on 01/2025
-freeCodeCamp
+<strong>Responsive Web Design</strong><br>
+<span class="smalltext">freeCodeCamp</span><br>
+<i class="smalltext">Finished on 01/2025</i>
 </p>
 <p>
-JavaScript
-Finished on 02/2026
-freeCodeCamp
+<strong>JavaScript</strong><br>
+<span class="smalltext">freeCodeCamp</span><br>
+<i class="smalltext">Finished on 02/2026</i>
+
 </p>
 <span class="linebreak"></span>
 <h2>SKILLS SUMMARY:</h2>
 <h3>Technical Skills:</h3>
 <p>
-Programming Languages: Python, Dart, Rust, C#, C++, JavaScript, HTML/CSS
-Frameworks & Libraries: NumPy, PySide6, OpenGL, Flutter, Firebase, Unity, Godot,
-Svelte, React
-Tools & Technologies: Git, Linux, PostgreSQL, Docker, Agile/Scrum
-Specialised: LiDAR data processing, embedded systems (Arduino, Raspberry Pi)
-Soft Skills: Problem Solving, Team Collaboration, Communication, Adaptability, Time
-Management
+<strong>Programming Languages:</strong> Python, Dart, Rust, C#, C++, JavaScript, HTML/CSS <br>
+<strong>Frameworks & Libraries:</strong> NumPy, PySide6, OpenGL, Flutter, Firebase, Unity, Godot,
+Svelte, React <br>
+<strong>Tools & Technologies:</strong> Git, Linux, PostgreSQL, Docker, Agile/Scrum <br>
+<strong>Specialised:</strong> LiDAR data processing, embedded systems (Arduino, Raspberry Pi) <br>
+<strong>Soft Skills:</strong> Problem Solving, Team Collaboration, Communication, Adaptability, Time
+Management <br>
 </p>
 <span class="linebreak"></span>
 <h2>EMPLOYMENT:</h2>
@@ -80,6 +105,7 @@ operating team</li>
 <li>Built status/alert notification cross-platform mobile application using Flutter framework</li>
 <li>Utilised version control systems (Git) for collaborative development</li>
 </ul>
+<br>
 <h3>Labourer</h3>
 <p><i>Date: Nov 2017 to Nov 2024</i></p>
 <p><strong>Cabling Network Solutions</strong></p>

@@ -55,6 +55,24 @@
   font-weight: normal;
   font-style: normal;
 }
+@font-face {
+  font-family: 'Noto-Sans';
+  src: url('$lib/fonts/NotoSans-VariableFont_wdth,wght.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Noto-Sans';
+  src: url('$lib/fonts/NotoSans-Italic-VariableFont_wdth,wght.ttf') format('truetype');
+  font-weight: normal;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'Special-Elite';
+  src: url('$lib/fonts/SpecialElite-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 
 	:global(p,a){
 		padding: 2px 80px;
@@ -105,7 +123,5 @@
 </main>
 
 <footer>
-	Bungee font by 2023 The Bungee Project Authors
-	<br>
-	Space mono font by 2016 The Space Mono Project Authors
+	©2026 Jack Briggs
 </footer>
