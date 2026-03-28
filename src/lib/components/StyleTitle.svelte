@@ -41,8 +41,8 @@
     gap: 20px;
     padding-left: 8vw;
     padding-right: 1vw;
-    margin-top: 0px;
-    margin-bottom: 0vh;
+    margin-top: 30px;
+    margin-bottom: 30px;
     
   }
 
