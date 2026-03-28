@@ -59,7 +59,7 @@
     height: 14vh;  
     min-height: 80px;  
     display: block;
-    padding: 20px 0px;
+    padding: 0px 0px;
     justify-self: right;
     object-fit: cover;
     justify-self: start;
