@@ -3,6 +3,7 @@
 	import html2pdf from "html2pdf.js";
 
   let resumeElement:HTMLElement;
+  let pageWidth:number;
 
   function toPDF(){
     let printOpts = {
@@ -61,8 +62,6 @@ button:active{
   font-weight:700;
 }
 .tiltpage{
-  rotate:0.9deg; 
-  margin:50px;
   box-shadow: 5px 5px 8px rgb(60, 60, 60);
   border:2px rgb(0, 0, 0) solid;
   border-radius: 3px;
@@ -86,8 +85,11 @@ button:active{
 
 <button onclick={() => toPDF()}>Download My Resume</button>
 
+<svelte:window bind:innerWidth={pageWidth}/>
+
 <div
   class="tiltpage"
+  style="rotate:{pageWidth/1000}deg;"
   in:fly={{y:25, x:200,duration:1200, delay:200}}
 >
   <div class="resbody"
