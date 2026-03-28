@@ -10,7 +10,6 @@
   }
 </style>
 
-
 <StyleTitle
 title="Resume"
 photo={respic}

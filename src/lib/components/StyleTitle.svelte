@@ -9,47 +9,55 @@
 
 <style>
   .title{
-    rotate: -15deg;
-		margin: 13vh 0% 0% 2vw;
+    /* border:2px purple solid; */
+    rotate: -10deg;
+		margin: 4vh 0% 0% 0vw;
+    text-align: center;
     font-size: 46px;
 		font-family:Bungee,Arial, Helvetica, sans-serif;
 		z-index: 2;
     overflow-wrap: break-word;
     word-break: break-all;
+    max-width: 40vw;
     
 	}
   .title-bg{
+    /* border:2px blue solid; */
     font-family:Bungee-Hollow,Arial, Helvetica, sans-serif;
     font-size: 60px;
     color: rgb(149, 149, 149);
     z-index: 1;
-    margin-bottom: 5vh;
-    
-  }
-
-  .page-title{
-    display:grid;
-    grid-template-columns: auto auto;
-    justify-content:start;
-    align-items: center;
-    gap: 2vw;
-    margin-left: 100px;
-    margin-right: 7vw;
-    margin-top: 50px;
+    margin-top:0px;
     margin-bottom: 0px;
     
   }
 
   .page-title{
-    position: relative;
-    text-align: left;
+    /* border:2px red solid; */
+    display:grid;
+    grid-template-columns: auto auto;
+    justify-content:flex-start;
+    align-items: center;
+    gap: 20px;
+    padding-left: 8vw;
+    padding-right: 1vw;
+    margin-top: 0px;
+    margin-bottom: 0vh;
     
   }
 
-  .page-title img{
+  .page-title{
+    position: relative;
+    text-align: left;  
+  }
 
+  .page-title img{
+    /* border:2px green solid; */
+    rotate: 8deg;
     width: auto; 
-    height: 150px;    
+    max-height: 200px;
+    height: 14vh;  
+    min-height: 80px;  
     display: block;
     padding: 0px 0px;
     justify-self: right;
@@ -59,27 +67,32 @@
   }
 
   .text-stack{
+    /* border:2px orange solid; */
     display: grid;
     grid-template-areas: "stack";  
   }
 
   .text-stack>*{
+    /* border:2px pink solid; */
+    /* max-width: 50vw; */
     grid-area: stack;
     line-height: 1;
-    justify-self: start;
+    justify-self: end;
     
   }
 
   .marquee-container {
+    /* border:2px lightblue solid; */
     overflow:hidden; 
     white-space: nowrap;
-    padding: 8vh 8vw;
+    padding: 4vh 10vw;
     border-radius: 50%;
     width: 20vw;
     
   }
 
   .marquee-content {
+    /* border:2px grey solid; */
     display: inline-block;
     animation: scroll-left 50s linear infinite;
     

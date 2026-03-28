@@ -1,8 +1,17 @@
 <script lang="ts">
   import { fly } from "svelte/transition";
-	import html2pdf from "html2pdf.js";
+  import { onMount } from 'svelte';
+  let html2pdf: any = null; 
+
+  onMount(async () => {
+    const module = await import("html2pdf.js");
+    html2pdf = module.default;
+    
+    console.log("html2pdf loaded");
+  });
 
   let resumeElement:HTMLElement;
+  let pageWidth:number;
 
   function toPDF(){
     let printOpts = {
@@ -11,7 +20,8 @@
     pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
   }
 
-  if (resumeElement !== null) {
+  if (resumeElement !== null && html2pdf !== null) {
+    console.log("there");
     html2pdf().set(printOpts).from(resumeElement).save();
   }
   }
@@ -61,16 +71,13 @@ button:active{
   font-weight:700;
 }
 .tiltpage{
-  rotate:0.9deg; 
-  margin:50px;
   box-shadow: 5px 5px 8px rgb(60, 60, 60);
   border:2px rgb(0, 0, 0) solid;
   border-radius: 3px;
-  right:100px;
-  margin:0px 60px;
+  margin:0px 30px;
 }
 .resbody{
-  padding:20px 50px 40px 50px;
+  padding:20px 40px 40px 40px;
 }
 .resdiv{
   padding:20px 20px 20px 20px;
@@ -86,8 +93,11 @@ button:active{
 
 <button onclick={() => toPDF()}>Download My Resume</button>
 
+<svelte:window bind:innerWidth={pageWidth}/>
+<!--style="rotate:{pageWidth/1000}deg;"-->
 <div
   class="tiltpage"
+  style="rotate:{pageWidth/1800}deg;"
   in:fly={{y:25, x:200,duration:1200, delay:200}}
 >
   <div class="resbody"
