@@ -9,18 +9,20 @@
 
 <style>
   .title{
-    border:2px purple solid;
-    rotate: -15deg;
-		margin: 8vh 0% 0% 8vw;
+    /* border:2px purple solid; */
+    rotate: -10deg;
+		margin: 4vh 0% 0% 0vw;
+    text-align: center;
     font-size: 46px;
 		font-family:Bungee,Arial, Helvetica, sans-serif;
 		z-index: 2;
     overflow-wrap: break-word;
     word-break: break-all;
+    max-width: 40vw;
     
 	}
   .title-bg{
-    border:2px blue solid;
+    /* border:2px blue solid; */
     font-family:Bungee-Hollow,Arial, Helvetica, sans-serif;
     font-size: 60px;
     color: rgb(149, 149, 149);
@@ -31,16 +33,16 @@
   }
 
   .page-title{
-    border:2px red solid;
+    /* border:2px red solid; */
     display:grid;
     grid-template-columns: auto auto;
     justify-content:flex-start;
     align-items: center;
-    gap: 0vw;
+    gap: 20px;
     padding-left: 8vw;
     padding-right: 1vw;
     margin-top: 0px;
-    margin-bottom: 0px;
+    margin-bottom: 0vh;
     
   }
 
@@ -50,7 +52,8 @@
   }
 
   .page-title img{
-    border:2px green solid;
+    /* border:2px green solid; */
+    rotate: 8deg;
     width: auto; 
     max-height: 200px;
     height: 14vh;  
@@ -64,21 +67,22 @@
   }
 
   .text-stack{
-    border:2px orange solid;
+    /* border:2px orange solid; */
     display: grid;
     grid-template-areas: "stack";  
   }
 
   .text-stack>*{
-    border:2px pink solid;
+    /* border:2px pink solid; */
+    /* max-width: 50vw; */
     grid-area: stack;
     line-height: 1;
-    justify-self: start;
+    justify-self: end;
     
   }
 
   .marquee-container {
-    border:2px lightblue solid;
+    /* border:2px lightblue solid; */
     overflow:hidden; 
     white-space: nowrap;
     padding: 4vh 10vw;
@@ -88,7 +92,7 @@
   }
 
   .marquee-content {
-    border:2px grey solid;
+    /* border:2px grey solid; */
     display: inline-block;
     animation: scroll-left 50s linear infinite;
     
