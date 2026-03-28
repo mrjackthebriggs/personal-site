@@ -1,6 +1,14 @@
 <script lang="ts">
   import { fly } from "svelte/transition";
-	import html2pdf from "html2pdf.js";
+  import { onMount } from 'svelte';
+  let html2pdf: any = null; 
+
+  onMount(async () => {
+    const module = await import("html2pdf.js");
+    html2pdf = module.default;
+    
+    console.log("html2pdf loaded");
+  });
 
   let resumeElement:HTMLElement;
   let pageWidth:number;
@@ -12,7 +20,8 @@
     pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
   }
 
-  if (resumeElement !== null) {
+  if (resumeElement !== null && html2pdf !== null) {
+    console.log("there");
     html2pdf().set(printOpts).from(resumeElement).save();
   }
   }
