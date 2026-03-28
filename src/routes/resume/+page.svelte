@@ -7,9 +7,10 @@
 <style>
   p{
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border: 2px solid black;
   }
 </style>
-
+<p>poopy</p>
 
 <StyleTitle
 title="Resume"

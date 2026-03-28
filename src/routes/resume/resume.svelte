@@ -65,11 +65,10 @@ button:active{
   box-shadow: 5px 5px 8px rgb(60, 60, 60);
   border:2px rgb(0, 0, 0) solid;
   border-radius: 3px;
-  right:100px;
-  margin:0px 60px;
+  margin:0px 30px;
 }
 .resbody{
-  padding:20px 50px 40px 50px;
+  padding:20px 40px 40px 40px;
 }
 .resdiv{
   padding:20px 20px 20px 20px;
@@ -86,10 +85,10 @@ button:active{
 <button onclick={() => toPDF()}>Download My Resume</button>
 
 <svelte:window bind:innerWidth={pageWidth}/>
-
+<!--style="rotate:{pageWidth/1000}deg;"-->
 <div
   class="tiltpage"
-  style="rotate:{pageWidth/1000}deg;"
+  style="rotate:{pageWidth/1800}deg;"
   in:fly={{y:25, x:200,duration:1200, delay:200}}
 >
   <div class="resbody"
