@@ -56,8 +56,8 @@
     rotate: 8deg;
     width: auto; 
     max-height: 200px;
-    height: 14vh;  
-    min-height: 80px;  
+    height: 18vh;  
+    min-height: 120px;  
     display: block;
     padding: 0px 0px;
     justify-self: right;

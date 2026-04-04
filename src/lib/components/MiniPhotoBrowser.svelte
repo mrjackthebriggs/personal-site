@@ -1,39 +1,40 @@
 <script lang='ts'>
-  let {images}:{images:Record<string,{ default: string }>} = $props();
+  let {images, imageWidth, compWidth}:{images:Record<string,{ default: string }>, imageWidth:number, compWidth:number} = $props();
 
   let imgViewIndex = $state(0);
-  let widthOfComp = $state(500);
-  let imageSize:number = 100;
   let picPrevs = $derived(Object.entries(images).splice(imgViewIndex, imgViewIndex + 2));
 </script>
 
 <style>
 button{
   font-family: SpaceMono-reg, sans-serif;;
-  border-radius: 50%;
+  border-radius: 50px;
   height:50px;
   width:50px;
+  min-width:50px;
+  min-height: 50px;
   box-shadow: 1px 1px 5px gray;
+  grid-row: 0;
+  z-index: 1;
 }
 .images{
+   /* border: 2px blue dotted; */
+  grid-row:0;
+  z-index: 0;
   display: flex;
-  /* border: 2px blue dotted; */
   overflow:hidden;
+  justify-content: center;
+  align-items: center;
   mask-image: linear-gradient(to right,rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 20%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 1) 80%, rgba(0, 0, 0, 0) 100%);
 }
-.fade-first-image{
-  /* border: 2px red dotted; */
-  /* mask-image: linear-gradient(to left, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0) 100%); */
-}
-.fade-last-image{
-  /* border: 2px green dotted; */
-  /* mask-image: linear-gradient(to right, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0) 100%); */
+.img-spacer{
+  /* border: 2px pink dotted; */
 }
 .container{
-  display: flex;
-  justify-content: center;
+  border: 2px black dotted;
+  display: grid;
   place-items: center;
-  /* border: 2px black dotted; */
+  padding: 2vh 0vw;
 }
 .images>*{
   /* border: lightgray solid 2px; */
@@ -44,21 +45,45 @@ button{
 
 <!-- style="width:{widthOfComp}px;" -->
 <div class="container"
-style="width:{widthOfComp}px;"
+ style="width:{compWidth}px;"
 >
-  <button onclick={(e) => {if(imgViewIndex > 0) imgViewIndex -= 1}}>Back</button>
+  <button 
+  onclick={(e) => {if(imgViewIndex > 0) imgViewIndex -= 1}}
+  style="grid-column:1"
+  >Back</button>
   <div class="images"
+  style="
+  min-height:{imageWidth}px;
+  max-width:{compWidth}px;
+  grid-column:2;
+  "
   >
+    {#if picPrevs.length < 3 && imgViewIndex == 0}
+    <div class="img-spacer"
+    style="
+    width:{imageWidth}px; 
+    min-width:{imageWidth}px; 
+    "
+    ></div>
+    {/if}
     {#each picPrevs as [_path, module], i}      
       <enhanced:img 
       style="
-      height:{imageSize}px;
-      width:auto;
+      width:{imageWidth}px;
+      height:auto;
       "
       src={module.default} 
       alt="Project Images" />
     {/each}
+    {#if picPrevs.length < 3 && imgViewIndex == Object.entries(images).length - 2}
+    <div class="img-spacer"
+    style="min-width:{imageWidth}px;"
+    ></div>
+    {/if}
   </div>
-  <button onclick={(e) => {if(imgViewIndex < Object.entries(images).length - 2) imgViewIndex += 1}}>Next</button>
+  <button 
+  onclick={(e) => {if(imgViewIndex < Object.entries(images).length - 2) imgViewIndex += 1}}
+  style="grid-column:3"
+  >Next</button>
 </div>
 
