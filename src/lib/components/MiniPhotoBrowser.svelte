@@ -1,6 +1,9 @@
-<script lang='ts'>
-  let {images, imageWidth, compWidth}:{images:Record<string,{ default: string }>, imageWidth:number, compWidth:number} = $props();
+<!-- Need to add animations at some point, need to fix how photos are stored and swapped -->
 
+<script lang='ts'>
+  import {fly} from 'svelte/transition'
+  
+  let {images, imageWidth, compWidth}:{images:Record<string,{ default: string }>, imageWidth:number, compWidth:number} = $props();
   let imgViewIndex = $state(0);
   let picPrevs = $derived(Object.entries(images).splice(imgViewIndex, imgViewIndex + 2));
 </script>
@@ -18,9 +21,11 @@ button{
   z-index: 1;
 }
 .images{
-   /* border: 2px blue dotted; */
+  border: 2px blue dotted;
   grid-row:0;
   z-index: 0;
+  position:absolute;
+  margin-left:5%;
   display: flex;
   overflow:hidden;
   justify-content: center;
@@ -34,6 +39,7 @@ button{
   border: 2px black dotted;
   display: grid;
   place-items: center;
+  justify-content: space-around;
   padding: 2vh 0vw;
 }
 .images>*{
@@ -45,7 +51,10 @@ button{
 
 <!-- style="width:{widthOfComp}px;" -->
 <div class="container"
- style="width:{compWidth}px;"
+ style="
+ width:{compWidth}px;
+ height:{imageWidth}px;
+ "
 >
   <button 
   onclick={(e) => {if(imgViewIndex > 0) imgViewIndex -= 1}}
@@ -68,6 +77,7 @@ button{
     {/if}
     {#each picPrevs as [_path, module], i}      
       <enhanced:img 
+      id={_path}
       style="
       width:{imageWidth}px;
       height:auto;

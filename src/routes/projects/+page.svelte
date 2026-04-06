@@ -3,6 +3,7 @@
   import projpic from '$lib/images/title-pictures/hobpic.png';
   import ProjectTile from './ProjectTile.svelte';
   import PhotoBrowser from "$lib/components/MiniPhotoBrowser.svelte";
+  import VideoBrowser from "$lib/components/YTBrowser.svelte";
 
   const projImageModules = import.meta.glob(
 		"$lib/images/projects/*.{avif,AVIF,gif,GIF,heif,HEIF,jpeg,JPEG,jpg,JPG,png,PNG,tiff,TIFF,webp,WEBP}",
@@ -36,5 +37,7 @@ Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, impe
 <PhotoBrowser
   images={projImageModules}
   imageWidth={100}
-  compWidth={200}
+  compWidth={500}
 />
+
+<VideoBrowser videoId="y6120QOlsfU"/>
