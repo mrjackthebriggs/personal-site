@@ -2,8 +2,23 @@
   import StyleTitle from "$lib/components/StyleTitle.svelte";
   import projpic from '$lib/images/title-pictures/hobpic.png';
   import ProjectTile from './ProjectTile.svelte';
-  import PhotoBrowser from "$lib/components/MiniPhotoBrowser.svelte";
+  import MiniPhotoBrowser from "$lib/components/MiniPhotoBrowser.svelte";
+  import PhotoBrowser from "$lib/components/PhotoBrowser.svelte";
   import VideoBrowser from "$lib/components/YTBrowser.svelte";
+
+  interface imgData{
+    img: {
+      h: number,
+      w: number,
+      src: string
+    },
+
+    sources: {
+     avif: string,
+      jpeg: string,
+      webp: string
+    }
+  }
 
   const projImageModules = import.meta.glob(
 		"$lib/images/projects/*.{avif,AVIF,gif,GIF,heif,HEIF,jpeg,JPEG,jpg,JPG,png,PNG,tiff,TIFF,webp,WEBP}",
@@ -13,7 +28,7 @@
 				enhanced: true
 			}
 		}
-  ) as Record<string,{ default: string }>;
+  ) as Record<string,{ default: imgData }>;
 </script>
 
 <StyleTitle
@@ -33,11 +48,3 @@ Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, impe
 <ProjectTile
   title="Pooper"
 />
-
-<PhotoBrowser
-  images={projImageModules}
-  imageWidth={100}
-  compWidth={500}
-/>
-
-<VideoBrowser videoId="y6120QOlsfU"/>

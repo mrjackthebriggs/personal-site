@@ -1,11 +1,14 @@
 <!-- Need to add animations at some point, need to fix how photos are stored and swapped -->
 
 <script lang='ts'>
-  import {fly} from 'svelte/transition'
+  import {fly} from 'svelte/transition';
+  import type {imgData} from "$lib/components/DataObjects";
   
-  let {images, imageWidth, compWidth}:{images:Record<string,{ default: string }>, imageWidth:number, compWidth:number} = $props();
+  let {images, imageWidth, compWidth}:{images:Record<string,{ default: imgData }>, imageWidth:number, compWidth:number} = $props();
   let imgViewIndex = $state(0);
   let picPrevs = $derived(Object.entries(images).splice(imgViewIndex, imgViewIndex + 2));
+
+  // Need some sort of function to clear the images at some point
 </script>
 
 <style>
@@ -75,14 +78,14 @@ button{
     "
     ></div>
     {/if}
-    {#each picPrevs as [_path, module], i}      
+    {#each picPrevs as [_path, mod], i}      
       <enhanced:img 
       id={_path}
       style="
       width:{imageWidth}px;
       height:auto;
       "
-      src={module.default} 
+      src={mod.default} 
       alt="Project Images" />
     {/each}
     {#if picPrevs.length < 3 && imgViewIndex == Object.entries(images).length - 2}

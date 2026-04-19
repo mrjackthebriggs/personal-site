@@ -1,6 +1,6 @@
 <script lang="ts">
   let {title, photo, alt} = $props();
-  let marqueeText = (title + " ").repeat(6); 
+  let marqueeText = $derived((title + " ").repeat(6)); 
 
   // if(title.indexOf(' ') == -1 && title.length > 10){
   //   title = title.slice(0,title.length/2) + "\r" + title.slice(title.length/2);

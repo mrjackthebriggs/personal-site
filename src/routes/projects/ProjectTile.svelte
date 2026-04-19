@@ -1,5 +1,17 @@
 <script lang="ts">
-  let {title} = $props();
-</script>
+   import type {imgData} from "$lib/components/DataObjects";
 
-<p>{title}</p>
+  let {title, images, ytLink} = $props<{title:string, images?:imgData, ytLink?:string}>();
+</script>
+<style>
+.main-cont{
+  display: flex;
+  justify-content: space-around;
+}
+</style>
+
+<div
+class="main-cont"
+>
+
+</div>
