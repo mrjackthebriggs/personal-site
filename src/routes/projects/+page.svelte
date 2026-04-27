@@ -48,3 +48,9 @@ Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, impe
 <ProjectTile
   title="Pooper"
 />
+
+<div style="width:400px;">
+  <PhotoBrowser
+    images={projImageModules}
+  />
+</div>
