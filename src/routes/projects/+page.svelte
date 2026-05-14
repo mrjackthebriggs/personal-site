@@ -1,41 +1,39 @@
 <script lang="ts">
-  import StyleTitle from "$lib/components/StyleTitle.svelte";
-  import projpic from '$lib/images/title-pictures/hobpic.png';
-  import ProjectTile from './ProjectTile.svelte';
-  import MiniPhotoBrowser from "$lib/components/MiniPhotoBrowser.svelte";
-  import PhotoBrowser from "$lib/components/PhotoBrowser.svelte";
-  import VideoBrowser from "$lib/components/YTBrowser.svelte";
+	import MiniPhotoBrowser from '$lib/components/MiniPhotoBrowser.svelte';
+	import StyleTitle from '$lib/components/StyleTitle.svelte';
+	import projpic from '$lib/images/title-pictures/hobpic.png';
+	import ProjectTile from './ProjectTile.svelte';
 
-  interface imgData{
-    img: {
-      h: number,
-      w: number,
-      src: string
-    },
+	interface imgData {
+		img: {
+			h: number;
+			w: number;
+			src: string;
+		};
 
-    sources: {
-     avif: string,
-      jpeg: string,
-      webp: string
-    }
-  }
+		sources: {
+			avif: string;
+			jpeg: string;
+			webp: string;
+		};
+	}
 
-  const projImageModules = import.meta.glob(
-		"$lib/images/projects/*.{avif,AVIF,gif,GIF,heif,HEIF,jpeg,JPEG,jpg,JPG,png,PNG,tiff,TIFF,webp,WEBP}",
+	const projImageModules = import.meta.glob(
+		'$lib/images/projects/*.{avif,AVIF,gif,GIF,heif,HEIF,jpeg,JPEG,jpg,JPG,png,PNG,tiff,TIFF,webp,WEBP}',
 		{
 			eager: true,
 			query: {
 				enhanced: true
 			}
 		}
-  ) as Record<string,{ default: imgData }>;
+	) as Record<string, { default: imgData }>;
+
+	var images: imgData[] = projImageModules
+		? Object.values(projImageModules).map((module) => module.default)
+		: [];
 </script>
 
-<StyleTitle
-title="My Projects"
-photo={projpic}
-alt="a project I made"
-/>
+<StyleTitle title="My Projects" photo={projpic} alt="a project I made" />
 
 <!-- <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus.
 
@@ -45,12 +43,5 @@ Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit ame
 
 Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum. Sed aliquam ultrices mauris. Integer ante arcu, accumsan a, consectetuer eget, posuere ut, mauris. Praesent adipiscing. Phasellus ullamcorper ipsum rutrum nunc. Nunc nonummy metus. Vestibulum volutpat pretium libero. Cras id dui. Aenean ut eros et nisl sagittis vestibulum. Nullam nulla eros, ultricies sit amet, nonummy id, imperdiet feugiat, pede. Sed lectus. Donec mollis hendrerit risus. Phasellus nec sem in justo pellentesque facilisis. Etiam imperdiet imperdiet orci. Nunc nec neque. Phasellus leo dolor, tempus non, auctor et, hendrerit quis, nisi. Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo. Maecenas malesuada. Praesent congue erat at massa. Sed cursus turpis vitae tortor. Donec posuere vulputate arcu. Phasellus accumsan cursus velit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed aliquam, nisi quis porttitor congue, elit erat euismod orci, ac</p> -->
 
-<ProjectTile
-  title="Pooper"
-/>
-
-<div style="width:400px;">
-  <PhotoBrowser
-    images={projImageModules}
-  />
-</div>
+<ProjectTile title="Pooper" description="Pooping" delay={200} images={projImageModules}/>
+<ProjectTile title="Pooper" description="Pooping" delay={400} ytLink="dQw4w9WgXcQ"/>

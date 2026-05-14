@@ -21,7 +21,7 @@
     display: flex;
     justify-content: center;
     width:auto;
-    aspect-ratio: 12 / 16;
+    aspect-ratio: 11 / 16;
   }
   .img-stack{
     border: blue 2px solid;
@@ -32,7 +32,7 @@
   }
   .pic-divs{
     border: red 2px solid;
-    aspect-ratio: 12 / 16;
+    aspect-ratio: 11 / 16;
   }
   .main-img{
     width:100%;
