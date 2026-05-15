@@ -1,10 +1,9 @@
 <script lang='ts'>
   import type { imgData } from '$lib/components/DataObjects'; // or keep your interface here
 
-  let {images, imageWidth, compWidth} = $props<{
+  let {images, imageWidth} = $props<{
     images: Record<string, { default: imgData }>,
     imageWidth?: number,
-    compWidth?: number
   }>();
 
   let imgViewIndex = $state(0);
@@ -19,6 +18,8 @@
     justify-content: space-around;
     padding: 2vh 0;
     overflow: hidden;
+    height:auto;
+    /* border: 2px solid pink; */
   }
 
   button {
@@ -33,39 +34,46 @@
   }
 
   .track-wrapper {
-    overflow: hidden;
     mask-image: linear-gradient(to right,
       rgba(0,0,0,0) 0%,
       rgba(0,0,0,1) 20%,
       rgba(0,0,0,1) 80%,
       rgba(0,0,0,0) 100%
     );
+    /* border: 2px solid brown; */
   }
 
   .track {
     display: flex;
     transition: transform 0.4s ease;
+    /* border: 2px solid red; */
   }
 
   .track>* {
     flex-shrink: 0;
     margin: 0 2px;
+    /* border: 2px solid blue; */
   }
 </style>
 
-<div class="container" style="width:{compWidth}px; height:{imageWidth}px;">
+<div class="container"
+style="
+width:{imageWidth * 2.3}px;
+min-width:{imageWidth * 2}px;
+"
+>
 
   <button
     style="grid-column:1"
     onclick={() => { if (imgViewIndex > 0) imgViewIndex -= 1 }}
   >Back</button>
 
-  <div class="track-wrapper" style="width:{compWidth * 0.7}px; grid-column:2;">
-    <div class="track" style="transform: translateX(-{offset}px);">
+  <div class="track-wrapper" style="width:{imageWidth * 1.5}px; grid-column:2;">
+    <div class="track" style="transform: translateX(-{offset + 4}px);">
       <div class="img-spacer"
       style="
-      width:40%; 
-      min-width:{imageWidth}px; 
+      width:{imageWidth/8}px; 
+      min-width:{imageWidth/8}px; 
       "
       ></div>
       {#each pics as [_path, mod], i}      

@@ -64,8 +64,8 @@
 	.content {
 		display: flex;
 		padding: 0px;
-		margin: 0px;
-		display: flex;
+		margin: 20px;
+		display:flex;
 	}
 </style>
 
@@ -76,9 +76,8 @@
 			<p>{layoutDescription}</p>
 		</div>
 		{#if images}
-			<MiniPhotoBrowser images={images} imageWidth={200} />
-		{/if}
-		{#if ytLink}
+			<MiniPhotoBrowser images={images} imageWidth={200}/>
+		{:else if ytLink}
 			<VideoBrowser videoId={ytLink} />
 		{/if}
 	</div>
