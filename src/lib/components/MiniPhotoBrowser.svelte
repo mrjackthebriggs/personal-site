@@ -6,18 +6,20 @@
     imageWidth?: number,
   }>();
 
+  const imageMultiplier = 1.5;  // how wide the track is compared to the image width, adjust as needed
   let imgViewIndex = $state(0);
   let pics:[string,{ default: imgData }][] = $derived(Object.entries(images));
-  let offset = $derived(imgViewIndex * imageWidth);
+  let offset = $derived((imgViewIndex * imageWidth) * 1.05);
 </script>
 
 <style>
   .container {
     display: grid;
-    place-items: center;
-    justify-content: space-between;
+    grid-template-columns: 5% auto 5%;
+    align-items: center;
+    align-content: start;
+    justify-content: start;
     padding: 2vh 0;
-    overflow:visible;
     height:auto;
     border: 2px solid pink;
   }
@@ -40,39 +42,34 @@
       rgba(0,0,0,1) 80%,
       rgba(0,0,0,0) 100%
     );
-    /* border: 2px solid brown; */
+    border: 2px solid brown;
   }
 
   .track {
     display: flex;
     transition: transform 0.4s ease;
-    /* border: 2px solid red; */
+    border: 2px solid red;
   }
 
   .track>* {
     flex-shrink: 0;
     margin: 0 2px;
-    /* border: 2px solid blue; */
+    border: 2px solid blue;
   }
 </style>
 
-<div class="container"
-style="
-min-width:{imageWidth * 1.5}px;
-"
->
+<div class="container">
 
   <button
     style="grid-column:1"
     onclick={() => { if (imgViewIndex > 0) imgViewIndex -= 1 }}
   >Back</button>
 
-  <div class="track-wrapper" style="width:{imageWidth * 1.5}px; grid-column:2;">
-    <div class="track" style="transform: translateX(-{offset + 4}px);">
+  <div class="track-wrapper" style="max-width:{imageWidth * imageMultiplier}px; grid-column:2;">
+    <div class="track" style="transform: translateX(-{offset}px);">
       <div class="img-spacer"
       style="
-      width:{imageWidth/8}px; 
-      min-width:{imageWidth/8}px; 
+      width:{(imageWidth * imageMultiplier)/8}px; 
       "
       ></div>
       {#each pics as [_path, mod], i}      
