@@ -15,11 +15,11 @@
   .container {
     display: grid;
     place-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
     padding: 2vh 0;
-    overflow: hidden;
+    overflow:visible;
     height:auto;
-    /* border: 2px solid pink; */
+    border: 2px solid pink;
   }
 
   button {
@@ -58,8 +58,7 @@
 
 <div class="container"
 style="
-width:{imageWidth * 2.3}px;
-min-width:{imageWidth * 2}px;
+min-width:{imageWidth * 1.5}px;
 "
 >
 

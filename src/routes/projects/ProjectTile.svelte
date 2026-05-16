@@ -31,8 +31,8 @@
 
 <style>
 	.main-cont {
-		margin: 50px 5%;
-		padding: 30px 30px;
+		margin: 40px 5%;
+		padding: 40px 40px;
 		border: 2px black solid;
 		border-radius: 20px 30px 20px 5px;
 		width: 80%;
@@ -64,8 +64,20 @@
 	.content {
 		display: flex;
 		padding: 0px;
-		margin: 20px;
-		display:flex;
+		margin: 0px;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		align-content:start;
+	}
+	.media-content {
+		min-width:40%;
+		width:auto;
+		flex:0;
+	}
+	.text-content {
+		flex:1;
+		max-width: 100%;
 	}
 </style>
 
@@ -75,11 +87,13 @@
 			<h1>{layoutTitle}</h1>
 			<p>{layoutDescription}</p>
 		</div>
-		{#if images}
-			<MiniPhotoBrowser images={images} imageWidth={200}/>
-		{:else if ytLink}
-			<VideoBrowser videoId={ytLink} />
-		{/if}
+		<div class="media-content">
+			{#if images}
+				<MiniPhotoBrowser images={images} imageWidth={200}/>
+			{:else if ytLink}
+				<VideoBrowser videoId={ytLink} />
+			{/if}
+		</div>
 	</div>
 	<button class="expand-button">Expand</button>
 </div>
