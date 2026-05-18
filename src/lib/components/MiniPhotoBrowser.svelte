@@ -9,7 +9,7 @@
   const imageMultiplier = 1.5;  // how wide the track is compared to the image width, adjust as needed
   let imgViewIndex = $state(0);
   let pics:[string,{ default: imgData }][] = $derived(Object.entries(images));
-  let offset = $derived((imgViewIndex * imageWidth) * 1.05);
+  let offset = $derived((imgViewIndex * imageWidth) * 1.02);
 </script>
 
 <style>
@@ -19,42 +19,49 @@
     align-items: center;
     align-content: start;
     justify-content: start;
-    padding: 2vh 0;
     height:auto;
-    border: 2px solid pink;
+    /* border: 2px solid pink; */
   }
 
   button {
     font-family: SpaceMono-reg, sans-serif;
-    border-radius: 50px;
+    border: 2px solid rgb(96, 96, 96);
+    border-radius: 13px;
     height: 50px;
     width: 50px;
     min-width: 50px;
     min-height: 50px;
-    box-shadow: 1px 1px 5px gray;
+    box-shadow: 2px 2px 4px gray;
     z-index: 1;
   }
-
+  .img-spacer{
+    width: calc(var(--spacer)); 
+    flex-shrink: 0;
+  }
   .track-wrapper {
+    --spacer:20%;
     mask-image: linear-gradient(to right,
       rgba(0,0,0,0) 0%,
       rgba(0,0,0,1) 20%,
       rgba(0,0,0,1) 80%,
       rgba(0,0,0,0) 100%
     );
-    border: 2px solid brown;
+    min-width: 5%;
+    /* border: 2px solid green; */
   }
 
   .track {
     display: flex;
+    align-items:center;
     transition: transform 0.4s ease;
-    border: 2px solid red;
+    width:70%;
+    /* border: 2px solid red; */
   }
 
   .track>* {
     flex-shrink: 0;
     margin: 0 2px;
-    border: 2px solid blue;
+    /* border: 2px solid blue; */
   }
 </style>
 
@@ -67,11 +74,7 @@
 
   <div class="track-wrapper" style="max-width:{imageWidth * imageMultiplier}px; grid-column:2;">
     <div class="track" style="transform: translateX(-{offset}px);">
-      <div class="img-spacer"
-      style="
-      width:{(imageWidth * imageMultiplier)/8}px; 
-      "
-      ></div>
+      <div class="img-spacer"></div>
       {#each pics as [_path, mod], i}      
         <enhanced:img 
         id={_path}
