@@ -9,7 +9,8 @@
 	const titleMaxLength = 60;
 	const descriptionMaxLength = 400;
 
-	let tileExpanded = false;
+	let tileExpanded = $state(false);
+	let mediaWidth:number = $state(0);
 
 	let { title, description, images, ytLink, delay = 0} = 
 		$props<{ title: string; description: string; images?: Record<string, { default: imgData }>; ytLink?: string; delay?: number; }>();
@@ -33,14 +34,24 @@
 
 <style>
 	.main-cont {
-		margin: 40px 5%;
-		padding: 40px 40px;
 		border: 2px black solid;
 		border-radius: 20px 30px 20px 5px;
-		width: 80%;
 		box-shadow: 5px 5px rgba(58, 58, 58, 0.8);
-		transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+		padding: 40px 40px;
 		background-color: white;
+	}
+	.main-cont-shrunk {
+		margin-top: 40px;
+		margin-bottom: 40px;
+		margin-left: 10%;
+		max-width:70%;
+		transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+	}
+	.main-cont-exp {
+		margin: 40px 5%;
+		max-width:100%;
+		width:auto;
+		transition: all 1.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 	}
 	.main-cont:hover {
 		box-shadow: 24px 24px rgba(58, 58, 58, 0.4);
@@ -56,7 +67,7 @@
 		width: auto;
 		padding: 10px 20px;
 		transition: all 0.2s cubic-bezier(0.25, 0.82, 0.165, 1);
-		box-shadow: 5px 5px rgba(58, 58, 58, 0.8);
+		box-shadow: 5px 5px rgba(91, 91, 91, 0.8);
 	}
 	.expand-button:active {
 		box-shadow: 2px 2px rgba(58, 58, 58, 0.8);
@@ -64,17 +75,31 @@
 		transform: translate(5px, 5px);
 	}
 	.content {
+		border: 2px solid blue;
 		display: flex;
-		padding: 0px;
 		margin: 0px;
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: center;
 		align-content:start;
 	}
+	.content-exp{
+		padding: 10px;
+		flex-direction: column;
+		align-items: center;
+		flex-grow: 1;
+	}
+	.content-shrunk{
+		padding: 20px;
+		flex-direction: row;
+	}
 	.media-content {
-		min-width:40%;
+		border:2px solid red;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 		width:auto;
+		height:auto;
 		flex:0;
 	}
 	.text-content {
@@ -83,19 +108,34 @@
 	}
 </style>
 
-<div class="main-cont" in:fly={{ y: 40, duration: 500, delay }}>
-	<div class="content">
+<div 
+class="main-cont {tileExpanded ? 'main-cont-exp' : 'main-cont-shrunk'}"
+in:fly={{ y: 40, duration: 500, delay }}
+>
+	<div 
+	bind:clientWidth=	{mediaWidth}
+	class="content {tileExpanded ? 'content-exp' : 'content-shrunk'}">
 		<div class="text-content">
 			<h1>{layoutTitle}</h1>
 			<p>{layoutDescription}</p>
 		</div>
-		<div class="media-content">
+		<div class="media-content"
+		style="min-width:{tileExpanded ? '80%' : '40%'};"
+		>
 			{#if images}
-				<MiniPhotoBrowser images={images} imageWidth={200}/>
+				{#if tileExpanded}
+					<PhotoBrowser images={images}/>
+				{:else}
+					<MiniPhotoBrowser images={images} imageWidth={mediaWidth/4}/>
+				{/if}
 			{:else if ytLink}
 				<VideoBrowser videoId={ytLink} />
 			{/if}
 		</div>
 	</div>
-	<button class="expand-button">Expand</button>
+	<button 
+	onclick={() => tileExpanded = !tileExpanded}
+	class="expand-button">
+	{tileExpanded ? 'Collapse' : 'Expand'}
+	</button>
 </div>

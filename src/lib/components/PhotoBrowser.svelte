@@ -1,11 +1,15 @@
 <script lang='ts'>
   import type {imgData} from "$lib/components/DataObjects"
 
-  let {images}:{images:Record<string,{ default: imgData }>} = $props();
+  let {images, isVert = true}:{images:Record<string,{ default: imgData }>, isVert?:boolean} = $props();
   let currentSrc = $state(Object.values(images)[0].default);
-  let pics = $derived(Object.entries(images));
-  let mainImageHeight:number = $state(NaN);
-  let mainImageWidth:number = $state(NaN);
+  let picStrings = $derived(Object.entries(images));
+  let pics = $derived(Object.values(images));
+  let mainImageHeight:number = $derived(Object.values(images)[0].default.img.h);
+  let mainImageWidth:number = $derived(Object.values(images)[0].default.img.w);
+  $inspect("mainImageHeight", mainImageHeight);
+  $inspect("mainImageWidth", mainImageWidth);
+
 </script>
 
 <style>
@@ -43,6 +47,11 @@
 <div
 style="
 border:black solid 2px;
+width:{mainImageWidth}px;
+height:auto;
+overfflow:hidden;
+display:flex;
+flex-direction:{isVert ? 'column' : 'row'};
 "
 >
   <div 
@@ -50,8 +59,6 @@ border:black solid 2px;
   >
     <enhanced:img  
     class="main-img"
-    bind:clientWidth={mainImageWidth} 
-    bind:clientHeight={mainImageHeight} 
     src={currentSrc.img.src} 
     alt="default"/>
   </div>
@@ -59,10 +66,10 @@ border:black solid 2px;
   class="img-stack"
   style="
   grid-template-columns: repeat(auto-fill, {mainImageWidth ? mainImageWidth*0.3 +'px' : '10%'});
-  grid-auto-rows: var(--height);
+  grid-auto-rows: auto;
   "
   >
-    {#each pics as [_path, mod], i}
+    {#each picStrings as [_path, mod], i}
       <div
       class="pic-divs"
       >
