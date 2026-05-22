@@ -1,0 +1,22 @@
+{
+  "ThisSite":{
+    "title": "This Site/Personal Site",
+    "date": "February-2023 to Present",
+    "desc": "This website is one of my projects to exercise my skills in web development. I built it using SvelteKit, a modern web framework that allows for fast and efficient development. I have included sections for all aspects of my life, allowing visitors to learn more about me and my work. Overall, this site serves as a portfolio to highlight my abilities and accomplishments in the field of software development."
+  },
+  "AMLabStatusApp":{
+    "title": "AMLab Status App",
+    "date": "November-2024 to January-2025",
+    "desc": "This project is a mobile application built using the Flutter framework that I did during my time at AMLab. The app was initially assigned to me after overhearing two senior engineers discuss the capabilities of Flutter. After enthusiastically adding to the conversation and expressing my passion for Flutter, I was given the job to set up a Flutter app to show live crane data by grabbing the info from an already set up Firebase. I was responsible for the code sampling the status of the crane, getting it upto, and retrieving it from Firebase to be shown on the flutter application. Overall, this project serves as a demonstration of my skills in mobile app development and my ability to create high-quality applications using Flutter.",
+    "ytVid":"R1CCLrjGijM"
+  },
+  "DiecRun2":{
+    "title": "Diec Run 2",
+    "date": "November-2024",
+    "desc": "Diec Run 2 is a 2D Runner made in the Godot game engine. The game features a runner character that the player must navigate around oncoming multi-faced dice. This was made for the Game Breakers Game Jam #4 in 1 week. DiecRun2 serves as a showcase of my skills in game development and my ability to create engaging and immersive gaming experiences using Godot. WARNING: loud noises and rude messages",
+    "link":"https://brivwec.itch.io/diec-run-2"
+  }
+
+
+
+}
