@@ -78,6 +78,11 @@
 		padding: 2px 80px;
 		font-family: SpaceMono-reg, sans-serif;
 	}
+
+	:global(h1,h2,h3,h4,h5){
+		font-family: Bungee, Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+		padding: 2px 80px;
+	}
 	nav {
 			width: 90%;
 			margin: 0% 5% 0% 5%;

@@ -1,0 +1,1 @@
+<!-- For when all the pages are finished, shows a preview of each on the home page -->
