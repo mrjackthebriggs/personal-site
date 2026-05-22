@@ -11,6 +11,7 @@
 
 	let tileExpanded = $state(false);
 	let mediaWidth:number = $state(0);
+	let mounted = $state(false);
 
 	let { title, description, images, ytLink, link, delay = 0} = 
 		$props<{ title: string; description: string; images?: Record<string, { default: imgData }>; ytLink?: string; link?: string; delay?: number; }>();
@@ -30,7 +31,10 @@
 			? description.slice(0, descriptionMaxLength) + '...'
 			: description
 	);
-	$inspect(delay);
+
+	onMount(() => {
+		mounted = true;
+	});
 </script>
 
 <style>
@@ -108,9 +112,10 @@
 	}
 </style>
 
+{#if mounted}
 <div 
 class="main-cont {tileExpanded ? 'main-cont-exp' : 'main-cont-shrunk'}"
-in:fly={{ x:0, y: 40, duration: 500, delay }}
+in:fly={{ x:0, y: 40, duration: 1000, delay: delay }}
 >
 	<div 
 	bind:clientWidth=	{mediaWidth}
@@ -142,3 +147,4 @@ in:fly={{ x:0, y: 40, duration: 500, delay }}
 	{tileExpanded ? 'Collapse' : 'Expand'}
 	</button>
 </div>
+{/if}
