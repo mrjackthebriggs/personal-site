@@ -1,7 +1,7 @@
 <script lang='ts'>
   import type {imgData} from "$lib/components/DataObjects"
 
-  let {images, isVert = true}:{images:Record<string,{ default: imgData }>, isVert?:boolean} = $props();
+  let {images, isVert = false}:{images:Record<string,{ default: imgData }>, isVert?:boolean} = $props();
   let currentSrc = $state<imgData | null>(null);
   let picStrings = $derived(Object.entries(images));
   let initialSrc = $derived(() => Object.values(images)[0]?.default);
@@ -16,7 +16,7 @@
 
 <style>
   .photo-browser {
-    border: 2px solid #000;
+    /* border: 2px solid #000; */
     width: min(100%, 760px);
     display: flex;
     flex-direction: column;
