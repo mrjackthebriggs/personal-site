@@ -2,87 +2,136 @@
   import type {imgData} from "$lib/components/DataObjects"
 
   let {images, isVert = true}:{images:Record<string,{ default: imgData }>, isVert?:boolean} = $props();
-  let currentSrc = $state(Object.values(images)[0].default);
+  let currentSrc = $state<imgData | null>(null);
   let picStrings = $derived(Object.entries(images));
-  let pics = $derived(Object.values(images));
-  let mainImageHeight:number = $derived(Object.values(images)[0].default.img.h);
-  let mainImageWidth:number = $derived(Object.values(images)[0].default.img.w);
-  $inspect("mainImageHeight", mainImageHeight);
-  $inspect("mainImageWidth", mainImageWidth);
+  let initialSrc = $derived(() => Object.values(images)[0]?.default);
 
+  $effect(() => {
+    const initial = initialSrc();
+    if (!currentSrc && initial) {
+      currentSrc = initial;
+    }
+  });
 </script>
 
 <style>
-  .img-prevs{
-    width:100%;
-    height:100%;
-    margin:0px;
-    padding:0px;
-    object-fit:scale-down;
+  .photo-browser {
+    border: 2px solid #000;
+    width: min(100%, 760px);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 3px solid red;
   }
-  .main-img-cont{
-    border: pink 2px solid;
+
+  .photo-browser.horizontal {
+    flex-direction: row;
+    align-items:center;
+    border: 3px solid blue;
+  }
+
+  .main-img-cont {
+    aspect-ratio: 1/1;
+    flex: 0 1 1;
+    min-width: 70%;
+    max-height: 65vh;
+    border: 1px solid #ddd;
+    border-radius: 14px;
+    overflow: hidden;
     display: flex;
     justify-content: center;
-    width:auto;
-    aspect-ratio: 11 / 16;
-  }
-  .img-stack{
-    border: blue 2px solid;
-    display: grid;
-    gap: 5px;
-    justify-content: start;
     align-items: center;
+    background: rgba(0, 0, 0, 0.00);
+    border: 2px solid rgba(0, 0, 0, 0.5);
+    /* border: 3px solid green; */
   }
-  .pic-divs{
-    border: red 2px solid;
-    aspect-ratio: 11 / 16;
+
+  .main-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    /* border: 3px solid orange; */
   }
-  .main-img{
-    width:100%;
-    object-fit:scale-down;
+
+  .img-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: start;
+    justify-content: center;
+    width: 100%;
+    border: 3px solid purple;
+  }
+
+  .pic-divs {
+    min-width: 50px;
+    width: 3vw;
+    aspect-ratio: 1/1;
+    overflow: hidden;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    background: #000;
+    box-shadow: 3px 3px rgba(0, 0, 0, 0.6);
+    transition: all 0.2s cubic-bezier(0.25, 0.82, 0.165, 1); 
+    
+    /* border: 3px solid pink; */
+  }
+
+  .preview-button {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    /* border: 3px solid lymewood; */
+  }
+  .pic-divs:hover {
+    box-shadow: 5px 5px 3px rgba(0, 0, 0, 0.8);
+  }
+  .pic-divs:active {    
+    box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.6);
+  }
+
+  .img-prevs {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    /* border: 3px solid cyan; */
   }
 </style>
 
-<div
-style="
-border:black solid 2px;
-width:{mainImageWidth}px;
-height:auto;
-overfflow:hidden;
-display:flex;
-flex-direction:{isVert ? 'column' : 'row'};
-"
->
-  <div 
-  class="main-img-cont"
-  >
-    <enhanced:img  
-    class="main-img"
-    src={currentSrc.img.src} 
-    alt="default"/>
+<div class="photo-browser {isVert ? '' : 'horizontal'}">
+  <div class="main-img-cont">
+    {#if currentSrc}
+      <enhanced:img
+        class="main-img"
+        src={currentSrc.img.src}
+        alt="Current project"
+      />
+    {/if}
   </div>
-  <div 
-  class="img-stack"
-  style="
-  grid-template-columns: repeat(auto-fill, {mainImageWidth ? mainImageWidth*0.3 +'px' : '10%'});
-  grid-auto-rows: auto;
-  "
-  >
+
+  <div class="img-stack">
     {#each picStrings as [_path, mod], i}
-      <div
-      class="pic-divs"
-      >
-        <button 
-        title="picture button"
-        onclick={() => currentSrc = mod.default}
-        class="img-prevs"
+      <div class="pic-divs">
+        <button
+          title="picture button"
+          onclick={() => {
+            currentSrc = mod.default;
+          }}
+          class="preview-button"
         >
-          <enhanced:img 
-          id={_path}
-          class="img-prevs"
-          src={mod.default} 
-          alt="Project Images" />
+          <enhanced:img
+            id={_path}
+            class="img-prevs"
+            src={mod.default.img.src}
+            alt="Project preview"
+          />
         </button>
       </div>
     {/each}

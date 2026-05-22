@@ -54,7 +54,7 @@
 		transition: all 1.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 	}
 	.main-cont:hover {
-		box-shadow: 24px 24px rgba(58, 58, 58, 0.4);
+		box-shadow: 24px 24px rgba(58, 58, 58, 0.5);
 		transform: translate(-0.5vh, -0.5vw);
 	}
 	.expand-button {
@@ -75,10 +75,8 @@
 		transform: translate(5px, 5px);
 	}
 	.content {
-		border: 2px solid blue;
 		display: flex;
 		margin: 0px;
-		display: flex;
 		flex-wrap: wrap;
 		justify-content: center;
 		align-content:start;
@@ -92,15 +90,16 @@
 	.content-shrunk{
 		padding: 20px;
 		flex-direction: row;
+		gap: 30px; /* add spacing between text and photo viewer */
 	}
 	.media-content {
-		border:2px solid red;
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		width:auto;
 		height:auto;
-		flex:0;
+		flex:1;
+		align-self: center;
 	}
 	.text-content {
 		flex:1;
