@@ -23,13 +23,14 @@
     gap: 8px;
     padding: 8px;
     box-sizing: border-box;
-    border: 3px solid red;
+    align-items: center;
+    /* border: 3px solid red; */
   }
 
   .photo-browser.horizontal {
     flex-direction: row;
     align-items:center;
-    border: 3px solid blue;
+    /* border: 3px solid blue; */
   }
 
   .main-img-cont {
@@ -63,7 +64,7 @@
     align-items: start;
     justify-content: center;
     width: 100%;
-    border: 3px solid purple;
+    /* border: 3px solid purple; */
   }
 
   .pic-divs {
