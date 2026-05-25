@@ -27,6 +27,7 @@
 		"vite-plugin-devtools-json": "^1.0.0"
 	},
 	"dependencies": {
-		"html2pdf.js": "^0.14.0"
+		"html2pdf.js": "^0.14.0",
+		"mdsvex": "^0.12.7"
 	}
 }

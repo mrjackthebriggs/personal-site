@@ -74,7 +74,7 @@
   font-style: normal;
 }
 
-	:global(p,a){
+	:global(p,a,li,span){
 		padding: 2px 80px;
 		font-family: SpaceMono-reg, sans-serif;
 	}
