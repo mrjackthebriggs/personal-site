@@ -1,11 +1,12 @@
 <!-- Derivitive of Project tile, couldn't be bother adding a "Tile" abstract type, so copy paste we go! -->
 <script lang="ts">
-	import type { imgData } from '$lib/components/DataObjects';
+	import type { articleData } from '$lib/components/DataObjects';
 	import { fly } from 'svelte/transition';
 	import MiniPhotoBrowser from '$lib/components/MiniPhotoBrowser.svelte';
 	import PhotoBrowser from '$lib/components/PhotoBrowser.svelte';
 	import VideoBrowser from '$lib/components/YTBrowser.svelte';
 	import { onMount } from 'svelte';
+	import type { Component } from 'svelte';
 
 	const titleMaxLength = 60;
 	const descriptionMaxLength = 400;
@@ -14,14 +15,38 @@
 	let mediaWidth:number = $state(0);
 	let mounted = $state(false);
 
-	let { title, description, images, ytLink, link, delay = 0} = 
-		$props<{ title: string; description: string; images?: Record<string, { default: imgData }>; ytLink?: string; link?: string; delay?: number; }>();
+	type ArticleModule = { default: Component };
+	let {article, articleLoader, delay = 0} = 
+		$props<{article: articleData, articleLoader: () => Promise<ArticleModule>, delay:number}>();
+
+	let expandedSlug: string | null = $state(null);
+  let loadingSlug: string | null = $state(null);
+  let loadedComponent: Component | null = $state(null);
+
+	// Essentially a switch function, could be turned into a switch statement.
+  async function toggleArticle(slug: string) {
+    if (expandedSlug === slug) {
+      expandedSlug = null;
+      return;
+    }
+
+    expandedSlug = slug;
+    if (loadedComponent) return;
+
+    const loader = articleLoader;
+    if (!loader) return;
+
+    loadingSlug = slug;
+    const module = await loader();
+    loadedComponent = module.default;
+    loadingSlug = null;
+  }
 
 	// Testing
-	title =
+	let title =
 		'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, quis gravida magna mi a libero. Fusce vulputate eleifend sapien. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus. Nullam accumsan lorem in dui. Cras ultricies mi eu turpis hendrerit fringilla. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia.Nam pretium turpis et arcu.';
 
-	description =
+	let description =
 		'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, quis gravida magna mi a libero. Fusce vulputate eleifend sapien. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus. Nullam accumsan lorem in dui. Cras ultricies mi eu turpis hendrerit fringilla. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia.Nam pretium turpis et arcu.';
 
 	let layoutTitle: string = $derived(tileExpanded? title :
@@ -122,30 +147,33 @@ in:fly={{ x:0, y: 40, duration: 1000, delay: delay }}
 	bind:clientWidth=	{mediaWidth}
 	class="content {tileExpanded ? 'content-exp' : 'content-shrunk'}">
 		<div class="text-content">
-			<h1>{layoutTitle}</h1>
-			<p>{layoutDescription}</p>
-			{#if link}
-				<a href={link} target="_blank" rel="noopener noreferrer">Link to {title}</a>
+			{#if expandedSlug === null}
+				<h1>{article.title}</h1>
+				{#if article.description}
+					<p>{article.description}</p>
+				{/if}
+			{/if}
+			{#if expandedSlug === article.slug}
+				{#if loadingSlug === article.slug}
+					<p>Loading article…</p>
+				{:else if loadedComponent}
+					<div class="expanded-article" style="margin-top: 1rem;">
+						<svelte:component this={loadedComponent} />
+					</div>
+				{:else}
+					<p>Unable to load article.</p>
+				{/if}
 			{/if}
 		</div>
 		<div class="media-content"
-		style="min-width:{tileExpanded ? '80%' : '40%'};"
-		>
-			{#if images}
-				{#if tileExpanded}
-					<PhotoBrowser images={images}/>
-				{:else}
-					<MiniPhotoBrowser images={images} imageWidth={mediaWidth/4}/>
-				{/if}
-			{:else if ytLink}
-				<VideoBrowser videoId={ytLink} />
-			{/if}
+		style="min-width:{tileExpanded ? '80%' : '40%'};">
 		</div>
 	</div>
 	<button 
-	onclick={() => tileExpanded = !tileExpanded}
-	class="expand-button">
-	{tileExpanded ? 'Collapse' : 'Expand'}
-	</button>
+	type="button" 
+	class="expand-button"
+	onclick={() => toggleArticle(article.slug)}>
+        {expandedSlug === article.slug ? 'Collapse' : 'Read more'}
+  </button>
 </div>
 {/if}

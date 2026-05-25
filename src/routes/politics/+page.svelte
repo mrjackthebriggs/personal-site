@@ -1,16 +1,14 @@
 <script lang="ts">
   import type { Component } from 'svelte';
+  import ArticleTile from './ArticleTile.svelte';
   import StyleTitle from "$lib/components/StyleTitle.svelte";
   import polpic from '$lib/images/title-pictures/polpic.png';
+  import type { articleData } from '$lib/components/DataObjects';
 
   export let data: {
-    articleData: {
-      slug: string;
-      title: string;
-      description: string;
-      path: string;
-    }[];
+    articleData: articleData[];
   };
+
 
   type ArticleModule = { default: Component };
   const articleLoaders = import.meta.glob('./Articles/*.md') as Record<
@@ -50,28 +48,11 @@
 
 {#if data.articleData.length > 0}
   {#each data.articleData as article}
-    <article style="margin-bottom: 1.5rem;">
-      <h2>{article.title}</h2>
-      {#if article.description}
-        <p>{article.description}</p>
-      {/if}
-
-      <button type="button" on:click={() => toggleArticle(article.slug)}>
-        {expandedSlug === article.slug ? 'Hide article' : 'Read more'}
-      </button>
-
-      {#if expandedSlug === article.slug}
-        {#if loadingSlug === article.slug}
-          <p>Loading article…</p>
-        {:else if articleComponents[article.slug]}
-          <div class="expanded-article" style="margin-top: 1rem;">
-            <svelte:component this={articleComponents[article.slug]} />
-          </div>
-        {:else}
-          <p>Unable to load article.</p>
-        {/if}
-      {/if}
-    </article>
+    <ArticleTile
+      article={article}
+      articleLoader={() => articleLoaders[`./Articles/${article.slug}.md`]()}
+      delay={0}
+    />
   {/each}
 {:else}
   <p>No articles found yet.</p>
