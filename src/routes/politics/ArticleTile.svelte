@@ -2,13 +2,10 @@
 <script lang="ts">
 	import type { articleData } from '$lib/components/DataObjects';
 	import { fly } from 'svelte/transition';
-	import MiniPhotoBrowser from '$lib/components/MiniPhotoBrowser.svelte';
-	import PhotoBrowser from '$lib/components/PhotoBrowser.svelte';
-	import VideoBrowser from '$lib/components/YTBrowser.svelte';
-	import { onMount } from 'svelte';
+	import { onMount, tick } from 'svelte';
 	import type { Component } from 'svelte';
 
-	const titleMaxLength = 60;
+	const titleMaxLength = 80;
 	const descriptionMaxLength = 400;
 
 	let tileExpanded = $state(false);
@@ -20,8 +17,10 @@
 		$props<{article: articleData, articleLoader: () => Promise<ArticleModule>, delay:number}>();
 
 	let expandedSlug: string | null = $state(null);
-  let loadingSlug: string | null = $state(null);
-  let loadedComponent: Component | null = $state(null);
+	let loadingSlug: string | null = $state(null);
+	let loadedComponent: Component | null = $state(null);
+	let tileTop: number | null = null;
+	let tileEl: HTMLElement | null = null;
 
 	// Essentially a switch function, could be turned into a switch statement.
   async function toggleArticle(slug: string) {
@@ -43,33 +42,32 @@
   }
 
 	// Testing
-	let title =
-		'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, quis gravida magna mi a libero. Fusce vulputate eleifend sapien. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus. Nullam accumsan lorem in dui. Cras ultricies mi eu turpis hendrerit fringilla. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia.Nam pretium turpis et arcu.';
-
-	let description =
-		'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, quis gravida magna mi a libero. Fusce vulputate eleifend sapien. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus. Nullam accumsan lorem in dui. Cras ultricies mi eu turpis hendrerit fringilla. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia.Nam pretium turpis et arcu.';
-
-	let layoutTitle: string = $derived(tileExpanded? title :
-		title.length > titleMaxLength ? title.slice(0, titleMaxLength) + '...' : title
+	let layoutTitle: string = $derived(tileExpanded? article.title :
+		article.title.length > titleMaxLength ? article.title.slice(0, titleMaxLength) + '...' : article.title
 	);
-	let layoutDescription: string = $derived(tileExpanded? description :
-		description.length > descriptionMaxLength
-			? description.slice(0, descriptionMaxLength) + '...'
-			: description
+	let layoutDescription: string = $derived(tileExpanded? article.description :
+		article.description.length > descriptionMaxLength
+			? article.description.slice(0, descriptionMaxLength) + '...'
+			: article.description
 	);
 
 	onMount(() => {
 		mounted = true;
 	});
+
 </script>
 
 <style>
+	/* I don't know why this needs to be imported for the .md files to load the style, but it does. */
+	@import './articleStyle.css';	
+
 	.main-cont {
 		border: 2px black solid;
 		border-radius: 20px 30px 20px 5px;
 		box-shadow: 5px 5px rgba(58, 58, 58, 0.8);
 		padding: 40px 40px;
 		background-color: white;
+		/* border: 2px solid red; */
 	}
 	.main-cont-shrunk {
 		margin-top: 40px;
@@ -77,12 +75,14 @@
 		margin-left: 10%;
 		max-width:70%;
 		transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+		/* border: 2px solid blue; */
 	}
 	.main-cont-exp {
 		margin: 40px 5%;
 		max-width:100%;
 		width:auto;
 		transition: all 1.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+		/* border: 2px solid green; */
 	}
 	.main-cont:hover {
 		box-shadow: 24px 24px rgba(58, 58, 58, 0.5);
@@ -111,17 +111,21 @@
 		flex-wrap: wrap;
 		justify-content: center;
 		align-content:start;
+		/* border: 2px solid orange; */
 	}
 	.content-exp{
 		padding: 10px;
-		flex-direction: column;
+		flex-direction: row;
 		align-items: center;
+		justify-content: center;
 		flex-grow: 1;
+		/* border: 2px solid purple; */
 	}
 	.content-shrunk{
 		padding: 20px;
 		flex-direction: row;
-		gap: 30px; /* add spacing between text and photo viewer */
+		/* gap: 30px; add spacing between text and photo viewer */
+		/* border: 2px solid cyan; */
 	}
 	.media-content {
 		display: flex;
@@ -131,15 +135,31 @@
 		height:auto;
 		flex:1;
 		align-self: center;
+		flex-direction: column; 
+		/* border: 2px solid magenta; */
 	}
 	.text-content {
 		flex:1;
 		max-width: 100%;
+    display: flex;
+    flex-direction: column;
+		/* border: 2px solid brown; */
 	}
+	.text-content h1 {
+		font-size: 36px;
+	}
+	  .md-page {
+    padding: 0% 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;   
+    
+  }
 </style>
 
 {#if mounted}
 <div 
+bind:this={tileEl}
 class="main-cont {tileExpanded ? 'main-cont-exp' : 'main-cont-shrunk'}"
 in:fly={{ x:0, y: 40, duration: 1000, delay: delay }}
 >
@@ -148,9 +168,14 @@ in:fly={{ x:0, y: 40, duration: 1000, delay: delay }}
 	class="content {tileExpanded ? 'content-exp' : 'content-shrunk'}">
 		<div class="text-content">
 			{#if expandedSlug === null}
-				<h1>{article.title}</h1>
+				<h1>{layoutTitle}</h1>
+				{#if article.author}
+					<p><i>By {article.author}</i></p>
+				{:else}
+					<p><i>By Unknown Author</i></p>
+				{/if}
 				{#if article.description}
-					<p>{article.description}</p>
+					<p>{layoutDescription}</p>
 				{/if}
 			{/if}
 			{#if expandedSlug === article.slug}
@@ -158,22 +183,37 @@ in:fly={{ x:0, y: 40, duration: 1000, delay: delay }}
 					<p>Loading article…</p>
 				{:else if loadedComponent}
 					<div class="expanded-article" style="margin-top: 1rem;">
-						<svelte:component this={loadedComponent} />
+						<svelte:component class="md-page" this={loadedComponent} />
 					</div>
 				{:else}
 					<p>Unable to load article.</p>
 				{/if}
 			{/if}
 		</div>
+		{#if article.img && !tileExpanded}
 		<div class="media-content"
 		style="min-width:{tileExpanded ? '80%' : '40%'};">
+				<p
+				style="color: rgba(20, 20, 20, 0.5); font-size: 0.8rem;"
+				><i>Posted at {article.datetime}</i></p>
+				<enhanced:img src={article.img} />
 		</div>
+		{/if}
 	</div>
 	<button 
 	type="button" 
 	class="expand-button"
-	onclick={() => toggleArticle(article.slug)}>
-        {expandedSlug === article.slug ? 'Collapse' : 'Read more'}
+	onclick={async () => {
+		if (!tileExpanded) {
+			tileTop = tileEl ? tileEl.getBoundingClientRect().top + window.scrollY : 0;
+		}
+		else if (tileExpanded && tileTop !== null) {
+			window.scrollTo({ top: tileTop, behavior: 'auto' });
+		}
+		toggleArticle(article.slug);
+		tileExpanded = !tileExpanded;
+	}}>
+    {expandedSlug === article.slug ? 'Collapse' : 'Read more'}
   </button>
 </div>
 {/if}

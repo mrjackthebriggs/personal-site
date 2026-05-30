@@ -18,6 +18,7 @@ export interface articleData {
       slug: string;
       title: string;
       description: string;
+      img: string;
       path: string;
     };
 
