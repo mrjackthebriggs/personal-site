@@ -1,3 +1,5 @@
+import type { Component } from 'svelte';
+
 export interface imgData{
   img: {
     h: number,
@@ -11,3 +13,15 @@ export interface imgData{
     webp: string
   }
 };
+
+export interface articleData {
+      slug: string;
+      title: string;
+      description: string;
+      img: string;
+      datetime: string;
+      author: string;
+      path: string;
+    };
+
+export type ArticleModule = { default: Component };

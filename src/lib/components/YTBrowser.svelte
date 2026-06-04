@@ -10,7 +10,7 @@
   .yt-container {
     position: relative;
     width: 100%;
-    padding-bottom: 56.25%; /* 16:9 ratio */
+    aspect-ratio: 16 / 9;
   }
 
   .yt-iframe {
@@ -25,11 +25,13 @@
   }
 </style>
 
-<div class="yt-container">
+<div class="yt-container"
+style="width: {isNaN(width) ? '100%' : width + 'px'}; height: {isNaN(height) ? 'auto' : height + 'px'};"
+>
   <iframe 
   class="yt-iframe"
-  width={width ? width : "auto"} 
-  height={height ? height : "auto"} 
+  // width={width ? width : "auto"} 
+  // height={height ? height : "auto"} 
   src="https://www.youtube-nocookie.com/embed/{videoId}?si=ZoxbzuwxQG2tY258&amp;start={start}{mute?'&mute=1':''}" 
   title="YouTube video player" 
   frameborder="0" 
