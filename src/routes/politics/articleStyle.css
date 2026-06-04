@@ -1,14 +1,14 @@
 
-  h1 {
+  .text-content > h1,.article > h1 {
     font-size: 60px;
   }
-  h2 {
+  .text-content > h2, .article > h2 {
     font-size: 36px;
   }
-  li {
+  .text-content > li, .article > li {
     margin-left: 5%;
   }
-  img {
+  .text-content > img, .article > img {
     padding: 5% 5%;
     max-width: 90%;
     min-width: 200px;
