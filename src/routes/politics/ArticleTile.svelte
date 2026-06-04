@@ -18,9 +18,9 @@
 
 	let expandedSlug: string | null = $state(null);
 	let loadingSlug: string | null = $state(null);
-	let loadedComponent: Component | null = $state(null);
-	let tileTop: number | null = null;
-	let tileEl: HTMLElement | null = null;
+	let LoadedComponent: Component | null = $state(null);
+	let tileTop: number | null = $state(null);
+	let tileEl: HTMLElement | null = $state(null);
 
 	// Essentially a switch function, could be turned into a switch statement.
   async function toggleArticle(slug: string) {
@@ -30,14 +30,14 @@
     }
 
     expandedSlug = slug;
-    if (loadedComponent) return;
+    if (LoadedComponent) return;
 
     const loader = articleLoader;
     if (!loader) return;
 
     loadingSlug = slug;
     const module = await loader();
-    loadedComponent = module.default;
+    LoadedComponent = module.default;
     loadingSlug = null;
   }
 
@@ -50,6 +50,8 @@
 			? article.description.slice(0, descriptionMaxLength) + '...'
 			: article.description
 	);
+
+	let articleDate = $derived(new Date(article.datetime));
 
 	onMount(() => {
 		mounted = true;
@@ -65,7 +67,7 @@
 		border: 2px black solid;
 		border-radius: 20px 30px 20px 5px;
 		box-shadow: 5px 5px rgba(58, 58, 58, 0.8);
-		padding: 40px 40px;
+		padding: 30px 30px 30px 50px;
 		background-color: white;
 		/* border: 2px solid red; */
 	}
@@ -86,7 +88,7 @@
 	}
 	.main-cont:hover {
 		box-shadow: 24px 24px rgba(58, 58, 58, 0.5);
-		transform: translate(-0.5vh, -0.5vw);
+		transform: translate(-2px, -2px);
 	}
 	.expand-button {
 		margin: 10px;
@@ -108,8 +110,9 @@
 	.content {
 		display: flex;
 		margin: 0px;
+		margin-bottom: 10px;
 		flex-wrap: wrap;
-		justify-content: center;
+		justify-content:space-around;
 		align-content:start;
 		/* border: 2px solid orange; */
 	}
@@ -122,9 +125,9 @@
 		/* border: 2px solid purple; */
 	}
 	.content-shrunk{
-		padding: 20px;
+		padding: 0px;
 		flex-direction: row;
-		/* gap: 30px; add spacing between text and photo viewer */
+		gap: 10px; /* add spacing between text and photo viewer */
 		/* border: 2px solid cyan; */
 	}
 	.media-content {
@@ -136,17 +139,29 @@
 		flex:1;
 		align-self: center;
 		flex-direction: column; 
+		gap: 10px;
 		/* border: 2px solid magenta; */
 	}
 	.text-content {
 		flex:1;
+		padding: 0px;
+		margin: 0px;
 		max-width: 100%;
     display: flex;
     flex-direction: column;
+		gap: 10px;
 		/* border: 2px solid brown; */
 	}
 	.text-content h1 {
 		font-size: 36px;
+	}
+	.text-content > * {
+		margin: 0;
+		padding: 0;
+	}
+	.media-content > * {
+		margin: 0;
+		padding: 0;
 	}
 	  .md-page {
     padding: 0% 50%;
@@ -181,9 +196,9 @@ in:fly={{ x:0, y: 40, duration: 1000, delay: delay }}
 			{#if expandedSlug === article.slug}
 				{#if loadingSlug === article.slug}
 					<p>Loading article…</p>
-				{:else if loadedComponent}
+				{:else if LoadedComponent}
 					<div class="expanded-article" style="margin-top: 1rem;">
-						<svelte:component class="md-page" this={loadedComponent} />
+						<LoadedComponent/>
 					</div>
 				{:else}
 					<p>Unable to load article.</p>
@@ -195,7 +210,7 @@ in:fly={{ x:0, y: 40, duration: 1000, delay: delay }}
 		style="min-width:{tileExpanded ? '80%' : '40%'};">
 				<p
 				style="color: rgba(20, 20, 20, 0.5); font-size: 0.8rem;"
-				><i>Posted at {article.datetime}</i></p>
+				><i>Published on {articleDate.toLocaleString()}</i></p>
 				<enhanced:img src={article.img} />
 		</div>
 		{/if}

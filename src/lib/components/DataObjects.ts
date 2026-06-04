@@ -19,6 +19,8 @@ export interface articleData {
       title: string;
       description: string;
       img: string;
+      datetime: string;
+      author: string;
       path: string;
     };
 

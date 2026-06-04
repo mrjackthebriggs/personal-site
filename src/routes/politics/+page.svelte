@@ -9,6 +9,8 @@
     articleData: articleData[];
   };
 
+  data.articleData.sort((a: articleData, b: articleData) => new Date(b.datetime).getTime() - new Date(a.datetime).getTime());
+
   const articleLoaders = import.meta.glob('./Articles/*.md') as Record<
     string,
     () => Promise<ArticleModule>

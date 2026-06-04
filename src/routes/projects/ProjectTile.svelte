@@ -7,7 +7,7 @@
 	import { onMount } from 'svelte';
 
 	const titleMaxLength = 60;
-	const descriptionMaxLength = 400;
+	const descriptionMaxLength = 200;
 
 	let tileExpanded = $state(false);
 	let mediaWidth:number = $state(0);
@@ -60,7 +60,7 @@
 	}
 	.main-cont:hover {
 		box-shadow: 24px 24px rgba(58, 58, 58, 0.5);
-		transform: translate(-0.5vh, -0.5vw);
+		transform: translate(-2px, -2px);
 	}
 	.expand-button {
 		margin: 10px;
@@ -109,6 +109,10 @@
 	.text-content {
 		flex:1;
 		max-width: 100%;
+	}
+	h1{
+		font-size: 36px;
+		margin-bottom: 10px;
 	}
 </style>
 
