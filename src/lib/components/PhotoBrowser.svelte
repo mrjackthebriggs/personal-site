@@ -17,7 +17,9 @@
 <style>
   .photo-browser {
     /* border: 2px solid #000; */
-    width: min(100%, 760px);
+    min-width: 100%;
+    max-width: 760px;
+    /* width: min(100%, 760px); */
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -37,6 +39,7 @@
     aspect-ratio: 1/1;
     flex: 0 1 1;
     min-width: 70%;
+    max-width: 90%;
     max-height: 65vh;
     border: 1px solid #ddd;
     border-radius: 14px;

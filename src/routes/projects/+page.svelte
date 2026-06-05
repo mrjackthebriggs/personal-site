@@ -20,6 +20,7 @@
 
 	const imagesByProject: Record<string, Record<string, { default: imgData }>> = {};
 
+	// Group images by directory they are located in, which corresponds to the project they belong to
 	for (const [path, module] of Object.entries(projImageModules)) {
 		const match = path.match(/\/projects\/([^/]+)\//);
 		if (!match) continue;
