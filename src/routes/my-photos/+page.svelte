@@ -13,6 +13,12 @@
 			}
 		}
 	) as Record<string, { default: imgData }>;
+
+  const sortedPhotoEntries = (a: [string, { default: imgData }], b: [string, { default: imgData }]) => {
+    const nameA = a[0];
+    const nameB = b[0];
+    return nameB.localeCompare(nameA);
+  };
 </script>
 
 <style>
@@ -33,5 +39,5 @@ alt="a Polaroid Sun 600 Camera"
 />
 
 <div id="photo-gallery"> 
-  <PhotoBrowser images={photoImageModules} isVert={true} />
+  <PhotoBrowser images={photoImageModules} isVert={true} sortFunc={sortedPhotoEntries} />
 </div>

@@ -1,13 +1,21 @@
 <script lang='ts'>
   import type {imgData} from "$lib/components/DataObjects"
+  import { onMount } from 'svelte';
 
-  let {images, isVert = false}:{images:Record<string,{ default: imgData }>, isVert?:boolean} = $props();
+  let {images, isVert = false, sortFunc}:{images:Record<string,{ default: imgData }>, isVert?:boolean, sortFunc?: (a: [string, { default: imgData }], b: [string, { default: imgData }]) => number} = $props();
   let currentSrc = $state<imgData | null>(null);
-  let picStrings = $derived(Object.entries(images));
   let initialSrc = $derived(() => Object.values(images)[0]?.default);
 
+  let picStrings = $derived(() => {
+    const entries = Object.entries(images);
+    if (sortFunc) {
+      return entries.sort((a, b) => sortFunc(a, b));
+    }
+    return entries;
+  });
+
   $effect(() => {
-    const initial = initialSrc();
+    const initial = picStrings()?.[0]?.[1].default;
     if (!currentSrc && initial) {
       currentSrc = initial;
     }
@@ -77,7 +85,7 @@
     overflow: hidden;
     border-radius: 12px;
     border: 1px solid #ccc;
-    background: #000;
+    /* background: #000; */
     box-shadow: 3px 3px rgba(0, 0, 0, 0.6);
     transition: all 0.2s cubic-bezier(0.25, 0.82, 0.165, 1); 
     
@@ -121,7 +129,7 @@
   </div>
 
   <div class="img-stack">
-    {#each picStrings as [_path, mod], i}
+    {#each picStrings() as [_path, mod], i}
       <div class="pic-divs">
         <button
           title="picture button"
