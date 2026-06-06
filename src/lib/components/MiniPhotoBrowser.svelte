@@ -74,6 +74,8 @@
     width: 20vw;
     max-width: 100%;
     height: auto;
+    border: 2px solid lightgray;
+    border-radius: 5%;
     /* object-fit: contain; */
     /* border: 2px solid orange; */
   }
