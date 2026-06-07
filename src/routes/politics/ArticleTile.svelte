@@ -142,6 +142,7 @@
 		gap: 10px;
 		/* border: 2px solid magenta; */
 	}
+
 	.text-content {
 		flex:1;
 		padding: 0px;
@@ -211,7 +212,12 @@ in:fly={{ x:0, y: 40, duration: 1000, delay: delay }}
 				<p
 				style="color: var(--grey); font-size: 0.8rem;"
 				><i>Published on {articleDate.toLocaleString()}</i></p>
-				<enhanced:img src={article.img} />
+				<enhanced:img 
+				src={article.img} 
+				style="
+				max-width:100%;
+				"
+				/>
 		</div>
 		{/if}
 	</div>
