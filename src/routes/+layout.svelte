@@ -31,7 +31,7 @@
 	});
 
 	let { children } = $props();
-	let currentTheme = $state('dark'); 
+	let currentTheme = $state('light'); 
 
   $effect(() => {
     document.documentElement.setAttribute('data-theme', currentTheme);
@@ -93,23 +93,22 @@
 }
 
 	:global(p,a,li,span){
-		padding: 2px 80px;
 		font-family: SpaceMono-reg, sans-serif;
 		color: var(--foreground);
 	}
 
 	:global(h1,h2,h3,h4,h5){
 		font-family: Bungee, Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-		padding: 2px 80px;
 		color: var(--foreground);
 	}
 	nav {
 			width: 90%;
-			margin: 0% 5% 0% 5%;
-			border-bottom: 1px solid #ddd;
+			margin: 5px 5%;
+			border-bottom: 2px solid var(--grey);
 			padding: 0 0;
 			display: flex;
-			justify-content: start;
+			align-items: center;
+			justify-content: space-between;
 			flex-direction: row;
 			background-color: var(--background);
 			/* border: 2px solid green; */
@@ -141,31 +140,42 @@
 		cursor: pointer;
 		width: 40px;
 		height: 40px;
-		margin: 0 10%;
-		color: var(--primary-accent);
+		margin: 5px 0px;
+		color: var(--foreground);
 		background-color: var(--background);
 		border: 2px solid var(--primary-accent);
-		border-radius: 4px;
+		border-radius: 5px;
 	}
 
 	.dropdown {
 		position: absolute;
-		padding: 0;
-		margin: 0;
+		padding: 10px 10px;
+		margin: 0px 5%;
 		transition: all 1s ease-out;
 		list-style-type: none;
 		display: flex;
 		flex-direction: column;
-		justify-content:left;
-		align-items:first baseline;
+		justify-items:start;
+		align-items:start;
 		z-index: 100;
+		background-color: var(--background);
+		border: 2px solid var(--primary-accent);
+		border-radius: 20px;
 		/* border: 2px solid red; */
 
 	}
 	.dd-link-btn{
-		padding: 0;
-		margin: 0;
+		padding: 0px;
+		margin: 2px 0px;
+		color: var(--foreground);
+		background-color: var(--background);
+		border: 2px solid var(--grey);
+		border-radius: 4px;
 		/* border: 2px solid blue; */
+	}
+	.dd-link-btn:hover{
+		border: 2px solid var(--primary-accent);
+		box-shadow: 2px 2px var(--light-shadow);
 	}
 
 	.theme-btn{
@@ -173,7 +183,7 @@
 		cursor: pointer;
 		width: 40px;
 		height: 40px;
-		margin: 0 10%;
+		margin: 5px 0px;
 		color: var(--primary-accent);
 		background-color: var(--background);
 		border: 2px solid var(--primary-accent);
@@ -203,8 +213,8 @@
 		--foreground: rgb(255, 246, 217);
 		--primary-accent: #ff6b6b;
 		--secondary-accent: #4ecdc4;
-		--shadow: rgba(255, 255, 255, 0.8);
-		--light-shadow: rgba(255, 255, 255, 0.55);
+		--shadow: rgba(0, 0, 0, 0.8);
+		--light-shadow: rgba(0, 0, 0, 0.55);
 		--grey: #6b6b6b;
 	}
 	:global(html, body) {
@@ -215,48 +225,46 @@
     height: 100%;
   }
 </style>
-
-<div 
->
+<nav>
 {#if colapsableNav}
+
 		<button class="dd-btn"
 		onclick={() => expandedDropdown = !expandedDropdown}
 		>≡</button>
 {/if}
 
 {#if !colapsableNav}
-	<nav>
 		{#each tabs as {href,name}}
 			<a 
 			aria-current={page.url.pathname === href}
 			style:font-size= {pageWidth > 700 ? 16 : (((pageWidth)/tabs.length/7))}px
 			href="{href}">{name}</a>
 		{/each}
-		<button class="theme-btn"
-		onclick={toggle}
-		>🌓</button>
-	</nav>
 {/if}
 
+<button class="theme-btn"
+		onclick={toggle}
+		>🌓</button>
+</nav>
 {#if colapsableNav && expandedDropdown}
 	<ul class="dropdown"
-	in:fly={{y:-200, duration: 1000}}
-	out:fly={{y:-200, duration: 1000}}
+	in:fly={{y:-200, duration: 600}}
+	out:fly={{y:-200, duration: 600}}
 	>
 			{#each tabs as {href,name}}
 				<li>
 					<button class="dd-link-btn" onclick={() => expandedDropdown = false}>
-					<a 
-					aria-current={page.url.pathname === href}
-					style:padding={pageWidth/(tabs.length*6)}px
-					style:font-size= {pageWidth > 700 ? 16 : (((pageWidth)/tabs.length/7))}px
-					href="{href}">{name}</a>
+						<a 
+						aria-current={page.url.pathname === href}
+						style:padding={pageWidth/(tabs.length*6)}px
+						style:font-size= {pageWidth > 700 ? 16 : (((pageWidth)/tabs.length/5))}px
+						href="{href}">{name}</a>
 					</button>
 				</li>
 			{/each}
 	</ul>
 {/if}
-</div>
+
 <main>
 	{@render children()}
 </main>
