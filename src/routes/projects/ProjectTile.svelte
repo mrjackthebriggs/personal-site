@@ -41,9 +41,9 @@
 	.main-cont {
 		border: 2px black solid;
 		border-radius: 20px 30px 20px 5px;
-		box-shadow: 5px 5px rgba(58, 58, 58, 0.8);
+		box-shadow: 5px 5px var(--shadow);
 		padding: 40px 40px;
-		background-color: white;
+		background-color: var(--background);
 	}
 	.main-cont-shrunk {
 		margin-top: 40px;
@@ -59,7 +59,7 @@
 		transition: all 1.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 	}
 	.main-cont:hover {
-		box-shadow: 24px 24px rgba(58, 58, 58, 0.5);
+		box-shadow: 24px 24px var(--light-shadow);
 		transform: translate(-2px, -2px);
 	}
 	.expand-button {
@@ -72,10 +72,10 @@
 		width: auto;
 		padding: 10px 20px;
 		transition: all 0.2s cubic-bezier(0.25, 0.82, 0.165, 1);
-		box-shadow: 5px 5px rgba(91, 91, 91, 0.8);
+		box-shadow: 5px 5px var(--light-shadow);
 	}
 	.expand-button:active {
-		box-shadow: 2px 2px rgba(58, 58, 58, 0.8);
+		box-shadow: 2px 2px var(--shadow);
 		border: 3px black solid;
 		transform: translate(5px, 5px);
 	}
@@ -138,7 +138,7 @@ in:fly={{ x:0, y: 40, duration: 1000, delay: delay }}
 				{#if tileExpanded}
 					<PhotoBrowser images={images}/>
 				{:else}
-					<MiniPhotoBrowser images={images} imageWidth={mediaWidth/4}/>
+					<MiniPhotoBrowser images={images}/>
 				{/if}
 			{:else if ytLink}
 				<VideoBrowser videoId={ytLink} />

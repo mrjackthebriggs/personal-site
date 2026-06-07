@@ -31,6 +31,15 @@
 	});
 
 	let { children } = $props();
+	let currentTheme = $state('dark'); 
+
+  $effect(() => {
+    document.documentElement.setAttribute('data-theme', currentTheme);
+  });
+
+  function toggle() {
+    currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  }
 </script>
 
 <svelte:head>
@@ -86,11 +95,13 @@
 	:global(p,a,li,span){
 		padding: 2px 80px;
 		font-family: SpaceMono-reg, sans-serif;
+		color: var(--foreground);
 	}
 
 	:global(h1,h2,h3,h4,h5){
 		font-family: Bungee, Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 		padding: 2px 80px;
+		color: var(--foreground);
 	}
 	nav {
 			width: 90%;
@@ -100,25 +111,25 @@
 			display: flex;
 			justify-content: start;
 			flex-direction: row;
+			background-color: var(--background);
 			/* border: 2px solid green; */
 		}
 
   nav>a {
     text-decoration: none;
-    color: #333;
+    color: var(--foreground);
     font-weight: 500;
 		margin: 0px;
 		padding:0px 3%;
   }
 
   nav>a:hover {
-    color: #00a2ff; /* Svelte Orange */
+    color: var(--secondary-accent);
   }
 	nav>a[aria-current=true]{
 		text-decoration-line: underline;
-  	text-decoration-color: red;
+  	text-decoration-color: var(--primary-accent);
 		font-family: SpaceMono-bold, sans-serif;
-		
 	}
 
 	.nav-cont{
@@ -131,6 +142,10 @@
 		width: 40px;
 		height: 40px;
 		margin: 0 10%;
+		color: var(--primary-accent);
+		background-color: var(--background);
+		border: 2px solid var(--primary-accent);
+		border-radius: 4px;
 	}
 
 	.dropdown {
@@ -152,30 +167,76 @@
 		margin: 0;
 		/* border: 2px solid blue; */
 	}
+
+	.theme-btn{
+		font-size: 18px;
+		cursor: pointer;
+		width: 40px;
+		height: 40px;
+		margin: 0 10%;
+		color: var(--primary-accent);
+		background-color: var(--background);
+		border: 2px solid var(--primary-accent);
+		border-radius: 4px;
+	}
 	footer{
 		padding: 40px 20px;
 		display: flex;
     justify-content: center;
+		background-color: var(--background);
 	}
+	main{
+		background-color: var(--background);
+		color: var(--foreground);
+	}
+	:global(html[data-theme="light"]) {
+		--background: rgb(255, 246, 217);
+		--foreground: black;
+		--primary-accent: #ea2e2e;
+		--secondary-accent: #8dd2ff;
+		--shadow: rgba(0, 0, 0, 0.8);
+		--light-shadow: rgba(0, 0, 0, 0.55);
+		--grey: #929292;
+	}
+	:global(html[data-theme="dark"]) {
+		--background: #34342f;
+		--foreground: rgb(255, 246, 217);
+		--primary-accent: #ff6b6b;
+		--secondary-accent: #4ecdc4;
+		--shadow: rgba(255, 255, 255, 0.8);
+		--light-shadow: rgba(255, 255, 255, 0.55);
+		--grey: #6b6b6b;
+	}
+	:global(html, body) {
+    background-color: var(--background) !important; /* !important temporarily forces past UI libraries to test */
+    color: var(--foreground);
+    transition: background-color 0.2s ease;
+    margin: 0;
+    height: 100%;
+  }
 </style>
 
-<div class="nav-cont">
-			{#if colapsableNav}
-					<button class="dd-btn"
-					onclick={() => expandedDropdown = !expandedDropdown}
-					>≡</button>
-			{/if}
-			{#if !colapsableNav}
-				<nav>
-					{#each tabs as {href,name}}
-						<a 
-						aria-current={page.url.pathname === href}
-						style:font-size= {pageWidth > 700 ? 16 : (((pageWidth)/tabs.length/7))}px
-						href="{href}">{name}</a>
-					{/each}
-				</nav>
-			{/if}
-</div>
+<div 
+>
+{#if colapsableNav}
+		<button class="dd-btn"
+		onclick={() => expandedDropdown = !expandedDropdown}
+		>≡</button>
+{/if}
+
+{#if !colapsableNav}
+	<nav>
+		{#each tabs as {href,name}}
+			<a 
+			aria-current={page.url.pathname === href}
+			style:font-size= {pageWidth > 700 ? 16 : (((pageWidth)/tabs.length/7))}px
+			href="{href}">{name}</a>
+		{/each}
+		<button class="theme-btn"
+		onclick={toggle}
+		>🌓</button>
+	</nav>
+{/if}
 
 {#if colapsableNav && expandedDropdown}
 	<ul class="dropdown"
@@ -195,7 +256,7 @@
 			{/each}
 	</ul>
 {/if}
-
+</div>
 <main>
 	{@render children()}
 </main>

@@ -25,7 +25,7 @@
     /* border:2px blue solid; */
     font-family:Bungee-Hollow,Arial, Helvetica, sans-serif;
     font-size: 60px;
-    color: rgb(149, 149, 149);
+    color: var(--grey);
     z-index: 1;
     margin-top:0px;
     margin-bottom: 0px;

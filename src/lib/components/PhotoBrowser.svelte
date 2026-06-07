@@ -49,14 +49,14 @@
     min-width: 70%;
     max-width: 90%;
     max-height: 65vh;
-    border: 1px solid #ddd;
+    border: 1px solid var(--background);
     border-radius: 14px;
     overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgba(0, 0, 0, 0.00);
-    border: 2px solid rgba(0, 0, 0, 0.5);
+    background: var(--background);
+    border: 2px solid var(--grey);
     /* border: 3px solid green; */
   }
 
@@ -84,9 +84,9 @@
     aspect-ratio: 1/1;
     overflow: hidden;
     border-radius: 12px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--grey);
     /* background: #000; */
-    box-shadow: 3px 3px rgba(0, 0, 0, 0.6);
+    box-shadow: 3px 3px var(--shadow);
     transition: all 0.2s cubic-bezier(0.25, 0.82, 0.165, 1); 
     
     /* border: 3px solid pink; */
@@ -102,10 +102,10 @@
     /* border: 3px solid lymewood; */
   }
   .pic-divs:hover {
-    box-shadow: 5px 5px 3px rgba(0, 0, 0, 0.8);
+    box-shadow: 5px 5px 1px var(--light-shadow);
   }
   .pic-divs:active {    
-    box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.6);
+    box-shadow: 0px 0px 1px var(--shadow);
   }
 
   .img-prevs {

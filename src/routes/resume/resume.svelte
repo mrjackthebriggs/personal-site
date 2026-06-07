@@ -21,7 +21,6 @@
   }
 
   if (resumeElement !== null && html2pdf !== null) {
-    console.log("there");
     html2pdf().set(printOpts).from(resumeElement).save();
   }
   }
@@ -46,7 +45,7 @@ h2{font-size: 2.7ch;}
 h3{font-size: 2ch;}
 h4{font-size: 1vw;}
 a{
-  color: rgb(192, 41, 41);
+  color: var(--primary-accent);
   text-decoration:none;
 }
 a:hover{
@@ -57,22 +56,22 @@ button{
   width: 20vw;
   height:70px;
   align-self: center;
-  background-color: red;
+  background-color: var(--primary-accent);
   color:white;
-  border: 2px solid rgb(73, 73, 73);
+  border: 2px solid var(--grey);
   border-radius: 5px;
 }
 button:hover{
-  background-color: rgb(255, 69, 69);
+  background-color: var(--primary-accent);
 }
 button:active{
-  background-color: rgb(255, 115, 115);
-  border: 4px solid black;
+  background-color: var(--primary-accent);
+  border: 4px solid var(--grey);
   font-weight:700;
 }
 .tiltpage{
-  box-shadow: 5px 5px 8px rgb(60, 60, 60);
-  border:2px rgb(0, 0, 0) solid;
+  box-shadow: 5px 5px 8px var(--shadow);
+  border:2px var(--foreground) solid;
   border-radius: 3px;
   margin:0px 30px;
 }
@@ -84,7 +83,7 @@ button:active{
   margin-top:20px;
 }
 .linebreak{
-  border-top: 2px rgb(141, 141, 141) solid;
+  border-top: 2px var(--grey) solid;
 }
 .smalltext{
   font-size: 14px;
