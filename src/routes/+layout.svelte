@@ -130,7 +130,7 @@
 		text-decoration-line: underline;       
 		text-decoration-style: wavy;         
 		text-decoration-color: var(--primary-accent);
-		text-decoration-thickness: 3px;
+		text-decoration-thickness: 2px;
 		text-underline-offset: 4px;   
 		font-family: SpaceMono-bold, sans-serif;
 	}
@@ -169,7 +169,7 @@
 
 	}
 	.dd-link-btn{
-		padding: 5px 0px;
+		padding: 7px 0px;
 		margin: 2px 0px;
 		color: var(--foreground);
 		background-color: var(--background);
@@ -192,8 +192,8 @@
 		text-decoration-line: underline;       
 		text-decoration-style: wavy;         
 		text-decoration-color: var(--primary-accent);
-		text-decoration-thickness: 3px;
-		text-underline-offset: 4px;
+		text-decoration-thickness: 2px;
+		text-underline-offset: 3px;
 	}
 
 	.theme-btn{
