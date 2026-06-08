@@ -224,7 +224,7 @@
 		--secondary-accent: #8dd2ff;
 		--shadow: rgba(0, 0, 0, 0.8);
 		--light-shadow: rgba(0, 0, 0, 0.55);
-		--grey: #747474;
+		--grey: #745454;
 	}
 	:global(html[data-theme="dark"]) {
 		--background: #34342f;
@@ -233,7 +233,7 @@
 		--secondary-accent: #4ecdc4;
 		--shadow: rgba(0, 0, 0, 0.8);
 		--light-shadow: rgba(0, 0, 0, 0.55);
-		--grey: #8c8c8c;
+		--grey: #af9393;
 	}
 	:global(html, body) {
     background-color: var(--background) !important; /* !important temporarily forces past UI libraries to test */
