@@ -34,6 +34,8 @@
     />
   {/each}
 {:else}
-  <p>No articles found yet.</p>
+  <p
+  style="margin:10%;"
+  >No articles found yet.</p>
 {/if}
 
