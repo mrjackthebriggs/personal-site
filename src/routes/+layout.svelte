@@ -120,14 +120,18 @@
     font-weight: 500;
 		margin: 0px;
 		padding:0px 3%;
+		transition: all 0.4s ease; 
   }
 
   nav>a:hover {
     color: var(--secondary-accent);
   }
 	nav>a[aria-current=true]{
-		text-decoration-line: underline;
-  	text-decoration-color: var(--primary-accent);
+		text-decoration-line: underline;       
+		text-decoration-style: wavy;         
+		text-decoration-color: var(--primary-accent);
+		text-decoration-thickness: 3px;
+		text-underline-offset: 4px;   
 		font-family: SpaceMono-bold, sans-serif;
 	}
 
@@ -165,17 +169,31 @@
 
 	}
 	.dd-link-btn{
-		padding: 0px;
+		padding: 5px 0px;
 		margin: 2px 0px;
 		color: var(--foreground);
 		background-color: var(--background);
 		border: 2px solid var(--grey);
 		border-radius: 4px;
+		transition: all 0.4s ease; 
 		/* border: 2px solid blue; */
 	}
+
 	.dd-link-btn:hover{
 		border: 2px solid var(--primary-accent);
 		box-shadow: 2px 2px var(--light-shadow);
+	}
+
+	.dd-link-btn > a{
+		text-decoration-line: none; 
+	}
+
+	.dd-link-btn > a[aria-current=true] {
+		text-decoration-line: underline;       
+		text-decoration-style: wavy;         
+		text-decoration-color: var(--primary-accent);
+		text-decoration-thickness: 3px;
+		text-underline-offset: 4px;
 	}
 
 	.theme-btn{
@@ -206,7 +224,7 @@
 		--secondary-accent: #8dd2ff;
 		--shadow: rgba(0, 0, 0, 0.8);
 		--light-shadow: rgba(0, 0, 0, 0.55);
-		--grey: #929292;
+		--grey: #747474;
 	}
 	:global(html[data-theme="dark"]) {
 		--background: #34342f;
@@ -215,7 +233,7 @@
 		--secondary-accent: #4ecdc4;
 		--shadow: rgba(0, 0, 0, 0.8);
 		--light-shadow: rgba(0, 0, 0, 0.55);
-		--grey: #6b6b6b;
+		--grey: #8c8c8c;
 	}
 	:global(html, body) {
     background-color: var(--background) !important; /* !important temporarily forces past UI libraries to test */
@@ -235,12 +253,21 @@
 
 {#if !colapsableNav}
 		{#each tabs as {href,name}}
-			<a 
-			aria-current={page.url.pathname === href}
-			style:font-size= {pageWidth > 700 ? 16 : (((pageWidth)/tabs.length/7))}px
-			href="{href}">{name}</a>
+			{#if name.toLowerCase()==="home"}
+					<a 
+				aria-current={page.url.pathname === href}
+				style:font-size= {pageWidth > 700 ? 16 : (((pageWidth)/tabs.length/7))}px
+				style="font-family: Bungee, sans-serif;"
+				href="{href}">Jack Briggs</a>
+			{:else}
+				<a 
+				aria-current={page.url.pathname === href}
+				style:font-size= {pageWidth > 700 ? 16 : (((pageWidth)/tabs.length/7))}px
+				href="{href}">{name}</a>
+			{/if}
 		{/each}
 {/if}
+
 
 <button class="theme-btn"
 		onclick={toggle}
@@ -252,15 +279,28 @@
 	out:fly={{y:-200, duration: 600}}
 	>
 			{#each tabs as {href,name}}
-				<li>
-					<button class="dd-link-btn" onclick={() => expandedDropdown = false}>
-						<a 
-						aria-current={page.url.pathname === href}
-						style:padding={pageWidth/(tabs.length*6)}px
-						style:font-size= {pageWidth > 700 ? 16 : (((pageWidth)/tabs.length/5))}px
-						href="{href}">{name}</a>
-					</button>
-				</li>
+				{#if name.toLowerCase()==="home"}
+					<li>
+						<button class="dd-link-btn" onclick={() => expandedDropdown = false}>
+							<a 
+							aria-current={page.url.pathname === href}
+							style:padding={pageWidth/(tabs.length*6)}px
+							style:font-size= {pageWidth > 700 ? 16 : (((pageWidth)/tabs.length/5))}px
+							style="font-family: Bungee, sans-serif;"
+							href="{href}">Jack Briggs</a>
+						</button>
+					</li>
+				{:else}
+					<li>
+						<button class="dd-link-btn" onclick={() => expandedDropdown = false}>
+							<a 
+							aria-current={page.url.pathname === href}
+							style:padding={pageWidth/(tabs.length*6)}px
+							style:font-size= {pageWidth > 700 ? 16 : (((pageWidth)/tabs.length/5))}px
+							href="{href}">{name}</a>
+						</button>
+					</li>
+				{/if}
 			{/each}
 	</ul>
 {/if}

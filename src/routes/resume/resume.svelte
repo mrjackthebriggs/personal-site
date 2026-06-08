@@ -31,6 +31,7 @@
   padding: 0px 0px;
   font-family: Noto-Sans,sans-serif;
   font-size: 1.8ch;
+  color: black;
 }
 h1, h2{
   font-family: Special-Elite, Arial;
@@ -77,6 +78,7 @@ button:active{
 }
 .resbody{
   padding:20px 40px 40px 40px;
+  background-color: white;
 }
 .resdiv{
   padding:20px 20px 20px 20px;

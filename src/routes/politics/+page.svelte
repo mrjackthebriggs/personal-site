@@ -25,11 +25,12 @@
 />
 
 {#if data.articleData.length > 0}
-  {#each data.articleData as article}
+  {#each data.articleData as article, i}
     <ArticleTile
       article={article}
       articleLoader={() => articleLoaders[`./Articles/${article.slug}.md`]()}
       delay={0}
+      flipped={i % 2 == 0 ? false : true}
     />
   {/each}
 {:else}

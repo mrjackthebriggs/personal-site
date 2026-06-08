@@ -13,8 +13,8 @@
 	let mounted = $state(false);
 
 	type ArticleModule = { default: Component };
-	let {article, articleLoader, delay = 0} = 
-		$props<{article: articleData, articleLoader: () => Promise<ArticleModule>, delay:number}>();
+	let {article, articleLoader, delay = 0, flipped = false} = 
+		$props<{article: articleData, articleLoader: () => Promise<ArticleModule>, delay:number, flipped:boolean}>();
 
 	let expandedSlug: string | null = $state(null);
 	let loadingSlug: string | null = $state(null);
@@ -181,7 +181,9 @@ in:fly={{ x:0, y: 40, duration: 1000, delay: delay }}
 >
 	<div 
 	bind:clientWidth=	{mediaWidth}
-	class="content {tileExpanded ? 'content-exp' : 'content-shrunk'}">
+	class="content {tileExpanded ? 'content-exp' : 'content-shrunk'}"
+	style="flex-direction:{!tileExpanded ? flipped ? 'row-reverse' : 'row':''};"
+	>
 		<div class="text-content">
 			{#if expandedSlug === null}
 				<h1>{layoutTitle}</h1>

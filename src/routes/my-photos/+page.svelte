@@ -3,6 +3,7 @@
   import photopic from '$lib/images/title-pictures/photopic.png';
   import type { imgData } from '$lib/components/DataObjects';
   import PhotoBrowser from '$lib/components/PhotoBrowser.svelte';
+  import {fly} from 'svelte/transition'
 
   const photoImageModules = import.meta.glob(
 		'./photos/*.{avif,AVIF,gif,GIF,heif,HEIF,jpeg,JPEG,jpg,JPG,png,PNG,tiff,TIFF,webp,WEBP}',
@@ -38,6 +39,8 @@ photo={photopic}
 alt="a Polaroid Sun 600 Camera"
 />
 
-<div id="photo-gallery"> 
+<div id="photo-gallery"
+in:fly={{y:40, duration: 800}}
+> 
   <PhotoBrowser images={photoImageModules} isVert={true} sortFunc={sortedPhotoEntries} />
 </div>

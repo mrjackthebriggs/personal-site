@@ -7,14 +7,14 @@
 	import { onMount } from 'svelte';
 
 	const titleMaxLength = 60;
-	const descriptionMaxLength = 200;
+	const descriptionMaxLength = 400;
 
 	let tileExpanded = $state(false);
 	let mediaWidth:number = $state(0);
 	let mounted = $state(false);
 
-	let { title, description, images, ytLink, link, delay = 0} = 
-		$props<{ title: string; description: string; images?: Record<string, { default: imgData }>; ytLink?: string; link?: string; delay?: number; }>();
+	let { title, date, description, images, ytLink, link, delay = 0, flipped = false} = 
+		$props<{ title: string; date?: string; description: string; images?: Record<string, { default: imgData }>; ytLink?: string; link?: string; delay?: number; flipped?: boolean }>();
 
 	// Testing
 	// title =
@@ -85,6 +85,8 @@
 		flex-wrap: wrap;
 		justify-content: center;
 		align-content:start;
+		flex-direction: row-reverse;
+		/* border: 2px solid green; */
 	}
 	.content-exp{
 		padding: 10px;
@@ -94,7 +96,7 @@
 	}
 	.content-shrunk{
 		padding: 20px;
-		flex-direction: row;
+		/* flex-direction: row; */
 		gap: 30px; /* add spacing between text and photo viewer */
 	}
 	.media-content {
@@ -105,12 +107,14 @@
 		height:auto;
 		flex:1;
 		align-self: center;
+		/* border: 2px solid blue; */
 	}
 	.text-content {
 		flex:1;
 		max-width: 100%;
+		/* border: 2px solid red; */
 	}
-	h1{
+	.text-content>h1{
 		font-size: 36px;
 		margin-bottom: 10px;
 	}
@@ -120,12 +124,20 @@
 <div 
 class="main-cont {tileExpanded ? 'main-cont-exp' : 'main-cont-shrunk'}"
 in:fly={{ x:0, y: 40, duration: 1000, delay: delay }}
+out:fly={{ x:0, y: -40, duration: 1000, delay: delay }}
 >
 	<div 
 	bind:clientWidth=	{mediaWidth}
-	class="content {tileExpanded ? 'content-exp' : 'content-shrunk'}">
+	class="content {tileExpanded ? 'content-exp' : 'content-shrunk'}"
+	style="flex-direction:{!tileExpanded ? flipped ? 'row-reverse' : 'row':''};"
+	>
 		<div class="text-content">
-			<h1>{layoutTitle}</h1>
+			<h1
+			style="text-overflow: ellipsis;"
+			>{layoutTitle}</h1>
+			<p
+			style="color:var(--grey)"
+			>{date}</p>
 			<p>{layoutDescription}</p>
 			{#if link}
 				<a href={link} target="_blank" rel="noopener noreferrer">Link to {title}</a>
