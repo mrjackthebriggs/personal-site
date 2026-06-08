@@ -1,15 +1,16 @@
 <script lang='ts'>
   import type { imgData } from '$lib/components/DataObjects'; // or keep your interface here
 
-  let {images, imageWidth} = $props<{
+  let {images} = $props<{
     images: Record<string, { default: imgData }>,
-    imageWidth?: number,
   }>();
 
   const imageMultiplier = 1.5;  // how wide the track is compared to the image width, adjust as needed
   let imgViewIndex = $state(0);
   let pics:[string,{ default: imgData }][] = $derived(Object.entries(images));
-  let offset = $derived((imgViewIndex * imageWidth) * 1.02);
+  let compWidth = $state(0);
+  let offset = $derived((imgViewIndex * (compWidth * 1.02)));
+
 </script>
 
 <style>
@@ -21,6 +22,19 @@
     justify-content: start;
     height:auto;
     /* border: 2px solid pink; */
+  }
+
+  .track-wrapper {
+    min-width: 0;
+    width: 100%;
+    mask-image: linear-gradient(to right,
+      rgba(0,0,0,0) 0%,
+      rgba(0,0,0,1) 20%,
+      rgba(0,0,0,1) 80%,
+      rgba(0,0,0,0) 100%
+    );
+    overflow: hidden;
+    /* border: 2px solid green; */
   }
 
   button {
@@ -35,53 +49,57 @@
     z-index: 1;
   }
   .img-spacer{
-    width: calc(var(--spacer)); 
+    width: 3vw; 
     flex-shrink: 0;
-  }
-  .track-wrapper {
-    --spacer:20%;
-    mask-image: linear-gradient(to right,
-      rgba(0,0,0,0) 0%,
-      rgba(0,0,0,1) 20%,
-      rgba(0,0,0,1) 80%,
-      rgba(0,0,0,0) 100%
-    );
-    min-width: 5%;
-    /* border: 2px solid green; */
   }
 
   .track {
-    display: flex;
-    align-items:center;
+    display: inline-flex;
+    justify-content: flex-start;
+    align-items: center;
     transition: transform 0.4s ease;
-    width:70%;
+    width: max-content;
     /* border: 2px solid red; */
   }
 
-  .track>* {
-    flex-shrink: 0;
+  .track > * {
+    flex: 0 0 auto;
     margin: 0 2px;
+    padding: 0;
     /* border: 2px solid blue; */
+  }
+
+  .photo {
+    display: block;
+    width: 20vw;
+    max-width: 100%;
+    height: auto;
+    border: 2px solid lightgray;
+    border-radius: 5%;
+    /* object-fit: contain; */
+    /* border: 2px solid orange; */
   }
 </style>
 
-<div class="container">
+<div class="container"
+>
 
   <button
     style="grid-column:1"
     onclick={() => { if (imgViewIndex > 0) imgViewIndex -= 1 }}
   >Back</button>
 
-  <div class="track-wrapper" style="max-width:{imageWidth * imageMultiplier}px; grid-column:2;">
-    <div class="track" style="transform: translateX(-{offset}px);">
+  <div class="track-wrapper" 
+  >
+    <div class="track" 
+      style="transform: translateX(-{offset}px);"
+      >
       <div class="img-spacer"></div>
       {#each pics as [_path, mod], i}      
         <enhanced:img 
         id={_path}
-        style="
-        width:{imageWidth}px;
-        height:auto;
-        "
+        bind:clientWidth={compWidth}
+        class="photo"
         src={mod.default} 
         alt="Project Images" />
       {/each}

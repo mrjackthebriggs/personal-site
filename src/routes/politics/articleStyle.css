@@ -16,7 +16,7 @@
 
   pre,
   pre code {
-    background-color: rgb(42, 42, 42);
+    background-color: var(--foreground);
     border-radius: 8px;
     color: #f8f8f2;
     font-family: 'Courier New', Courier, monospace;
@@ -29,7 +29,7 @@
     overflow-x: auto;
     white-space: pre-wrap;
     word-break: break-word;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--shadow);
   }
 
   pre code {
@@ -37,7 +37,7 @@
   }
 
   code {
-    background-color: rgb(42, 42, 42);
+    background-color: var(--shadow);
     color: #f8f8f2;
     padding: 0.2rem 10%;
     border-radius: 4px;

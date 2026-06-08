@@ -16,8 +16,10 @@
     font-size: 46px;
 		font-family:Bungee,Arial, Helvetica, sans-serif;
 		z-index: 2;
+    white-space: normal;
+    word-break: normal;
     overflow-wrap: break-word;
-    word-break: break-all;
+    hyphens: auto;
     max-width: 40vw;
     
 	}
@@ -25,7 +27,7 @@
     /* border:2px blue solid; */
     font-family:Bungee-Hollow,Arial, Helvetica, sans-serif;
     font-size: 60px;
-    color: rgb(149, 149, 149);
+    color: var(--grey);
     z-index: 1;
     margin-top:0px;
     margin-bottom: 0px;
@@ -83,23 +85,28 @@
 
   .marquee-container {
     /* border:2px lightblue solid; */
-    overflow:hidden; 
+    overflow:hidden;
     white-space: nowrap;
     padding: 4vh 10vw;
     border-radius: 50%;
     width: 20vw;
-    
   }
 
   .marquee-content {
-    /* border:2px grey solid; */
-    display: inline-block;
+    display: inline-flex;
+    min-width: 200%;
     animation: scroll-left 50s linear infinite;
-    
+    will-change: transform;
+  }
+
+  .marquee-item {
+    white-space: nowrap;
+    display: inline-block;
+    padding-right: 2rem;
   }
 
   @keyframes scroll-left {
-    0% { transform: translateX(-25%); }
+    0% { transform: translateX(-25); }
     100% { transform: translateX(-75%); }
   }
 </style>
@@ -109,7 +116,8 @@
     <h1 class="title" >{title}</h1>
     <div class="marquee-container">
       <div class="marquee-content">
-        <h1 class="title-bg" >{marqueeText}</h1>
+        <span class="title-bg marquee-item">{marqueeText}</span>
+        <span class="title-bg marquee-item">{marqueeText}</span>
       </div>
     </div>
   </div>

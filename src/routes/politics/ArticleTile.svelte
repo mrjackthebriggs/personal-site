@@ -13,8 +13,8 @@
 	let mounted = $state(false);
 
 	type ArticleModule = { default: Component };
-	let {article, articleLoader, delay = 0} = 
-		$props<{article: articleData, articleLoader: () => Promise<ArticleModule>, delay:number}>();
+	let {article, articleLoader, delay = 0, flipped = false} = 
+		$props<{article: articleData, articleLoader: () => Promise<ArticleModule>, delay:number, flipped:boolean}>();
 
 	let expandedSlug: string | null = $state(null);
 	let loadingSlug: string | null = $state(null);
@@ -66,9 +66,9 @@
 	.main-cont {
 		border: 2px black solid;
 		border-radius: 20px 30px 20px 5px;
-		box-shadow: 5px 5px rgba(58, 58, 58, 0.8);
+		box-shadow: 5px 5px var(--shadow);
 		padding: 30px 30px 30px 50px;
-		background-color: white;
+		background-color: var(--background);
 		/* border: 2px solid red; */
 	}
 	.main-cont-shrunk {
@@ -87,7 +87,7 @@
 		/* border: 2px solid green; */
 	}
 	.main-cont:hover {
-		box-shadow: 24px 24px rgba(58, 58, 58, 0.5);
+		box-shadow: 24px 24px var(--light-shadow);
 		transform: translate(-2px, -2px);
 	}
 	.expand-button {
@@ -100,10 +100,10 @@
 		width: auto;
 		padding: 10px 20px;
 		transition: all 0.2s cubic-bezier(0.25, 0.82, 0.165, 1);
-		box-shadow: 5px 5px rgba(91, 91, 91, 0.8);
+		box-shadow: 5px 5px var(--light-shadow);
 	}
 	.expand-button:active {
-		box-shadow: 2px 2px rgba(58, 58, 58, 0.8);
+		box-shadow: 2px 2px var(--shadow);
 		border: 3px black solid;
 		transform: translate(5px, 5px);
 	}
@@ -142,6 +142,7 @@
 		gap: 10px;
 		/* border: 2px solid magenta; */
 	}
+
 	.text-content {
 		flex:1;
 		padding: 0px;
@@ -180,7 +181,9 @@ in:fly={{ x:0, y: 40, duration: 1000, delay: delay }}
 >
 	<div 
 	bind:clientWidth=	{mediaWidth}
-	class="content {tileExpanded ? 'content-exp' : 'content-shrunk'}">
+	class="content {tileExpanded ? 'content-exp' : 'content-shrunk'}"
+	style="flex-direction:{!tileExpanded ? flipped ? 'row-reverse' : 'row':''};"
+	>
 		<div class="text-content">
 			{#if expandedSlug === null}
 				<h1>{layoutTitle}</h1>
@@ -209,9 +212,14 @@ in:fly={{ x:0, y: 40, duration: 1000, delay: delay }}
 		<div class="media-content"
 		style="min-width:{tileExpanded ? '80%' : '40%'};">
 				<p
-				style="color: rgba(20, 20, 20, 0.5); font-size: 0.8rem;"
+				style="color: var(--grey); font-size: 0.8rem;"
 				><i>Published on {articleDate.toLocaleString()}</i></p>
-				<enhanced:img src={article.img} />
+				<enhanced:img 
+				src={article.img} 
+				style="
+				max-width:100%;
+				"
+				/>
 		</div>
 		{/if}
 	</div>

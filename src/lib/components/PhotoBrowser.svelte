@@ -1,13 +1,21 @@
 <script lang='ts'>
   import type {imgData} from "$lib/components/DataObjects"
+  import { onMount } from 'svelte';
 
-  let {images, isVert = false}:{images:Record<string,{ default: imgData }>, isVert?:boolean} = $props();
+  let {images, isVert = false, sortFunc}:{images:Record<string,{ default: imgData }>, isVert?:boolean, sortFunc?: (a: [string, { default: imgData }], b: [string, { default: imgData }]) => number} = $props();
   let currentSrc = $state<imgData | null>(null);
-  let picStrings = $derived(Object.entries(images));
   let initialSrc = $derived(() => Object.values(images)[0]?.default);
 
+  let picStrings = $derived(() => {
+    const entries = Object.entries(images);
+    if (sortFunc) {
+      return entries.sort((a, b) => sortFunc(a, b));
+    }
+    return entries;
+  });
+
   $effect(() => {
-    const initial = initialSrc();
+    const initial = picStrings()?.[0]?.[1].default;
     if (!currentSrc && initial) {
       currentSrc = initial;
     }
@@ -17,7 +25,9 @@
 <style>
   .photo-browser {
     /* border: 2px solid #000; */
-    width: min(100%, 760px);
+    min-width: 100%;
+    max-width: 760px;
+    /* width: min(100%, 760px); */
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -37,15 +47,16 @@
     aspect-ratio: 1/1;
     flex: 0 1 1;
     min-width: 70%;
+    max-width: 90%;
     max-height: 65vh;
-    border: 1px solid #ddd;
+    border: 1px solid var(--background);
     border-radius: 14px;
     overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgba(0, 0, 0, 0.00);
-    border: 2px solid rgba(0, 0, 0, 0.5);
+    background: var(--background);
+    border: 2px solid var(--grey);
     /* border: 3px solid green; */
   }
 
@@ -73,9 +84,9 @@
     aspect-ratio: 1/1;
     overflow: hidden;
     border-radius: 12px;
-    border: 1px solid #ccc;
-    background: #000;
-    box-shadow: 3px 3px rgba(0, 0, 0, 0.6);
+    border: 1px solid var(--grey);
+    /* background: #000; */
+    box-shadow: 3px 3px var(--shadow);
     transition: all 0.2s cubic-bezier(0.25, 0.82, 0.165, 1); 
     
     /* border: 3px solid pink; */
@@ -91,10 +102,10 @@
     /* border: 3px solid lymewood; */
   }
   .pic-divs:hover {
-    box-shadow: 5px 5px 3px rgba(0, 0, 0, 0.8);
+    box-shadow: 5px 5px 1px var(--light-shadow);
   }
   .pic-divs:active {    
-    box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.6);
+    box-shadow: 0px 0px 1px var(--shadow);
   }
 
   .img-prevs {
@@ -118,7 +129,7 @@
   </div>
 
   <div class="img-stack">
-    {#each picStrings as [_path, mod], i}
+    {#each picStrings() as [_path, mod], i}
       <div class="pic-divs">
         <button
           title="picture button"
