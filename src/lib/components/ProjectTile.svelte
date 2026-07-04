@@ -104,10 +104,12 @@
 		align-items: center;
 		width:auto;
 		height:auto;
+		max-width: 60vw;
 		flex:1;
 		align-self: center;
 		min-width: 0;
 		overflow: hidden;
+		margin-left:10px;
 		/* border: 2px solid blue; */
 	}
 	.text-content {
@@ -132,6 +134,7 @@
 
 		.media-content {
 			width: 100% !important;
+			max-width: 100%;
 		}
 	}
 </style>
