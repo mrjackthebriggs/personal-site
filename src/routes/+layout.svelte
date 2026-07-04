@@ -11,6 +11,7 @@
 		{href:"/resume",name:"Resume"},
 		{href:"/projects",name:"Projects"},
 		{href:"/politics",name:"Politics"},
+		{href:"/tech-blog",name:"Tech Blog"},
 		{href:"/music",name:"Music"},
 		{href:"/my-photos",name:"Photos"},
 		{href:"/skateboarding",name:"Skateboarding"}
@@ -102,10 +103,9 @@
 		color: var(--foreground);
 	}
 	nav {
-			width: 90%;
-			margin: 5px 5%;
+			margin: 5px 3% 0px 3%;
 			border-bottom: 2px solid var(--grey);
-			padding: 0 0;
+			padding: 0 20px 0 20px;
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
@@ -119,8 +119,9 @@
     color: var(--foreground);
     font-weight: 500;
 		margin: 0px;
-		padding:0px 3%;
+		padding:0px;
 		transition: all 0.4s ease; 
+		white-space: nowrap;
   }
 
   nav>a:hover {
@@ -240,8 +241,15 @@
     color: var(--foreground);
     transition: background-color 0.2s ease;
     margin: 0;
-    height: 100%;
+    min-height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+    scrollbar-gutter: stable;
   }
+
+	:global(html) {
+		overflow-y: scroll;
+	}
 </style>
 <nav>
 {#if colapsableNav}
@@ -249,6 +257,14 @@
 		<button class="dd-btn"
 		onclick={() => expandedDropdown = !expandedDropdown}
 		>≡</button>
+		<button class="dd-link-btn" onclick={() => expandedDropdown = false}>
+		<a 
+		aria-current={page.url.pathname === "/"}
+		style:padding={pageWidth/(tabs.length*6)}px
+		style:font-size= {pageWidth > 700 ? 16 : (((pageWidth)/tabs.length/5))}px
+		style="font-family: Bungee, sans-serif;"
+		href="/">Jack Briggs</a>
+	</button>
 {/if}
 
 {#if !colapsableNav}
@@ -279,18 +295,7 @@
 	out:fly={{y:-200, duration: 600}}
 	>
 			{#each tabs as {href,name}}
-				{#if name.toLowerCase()==="home"}
-					<li>
-						<button class="dd-link-btn" onclick={() => expandedDropdown = false}>
-							<a 
-							aria-current={page.url.pathname === href}
-							style:padding={pageWidth/(tabs.length*6)}px
-							style:font-size= {pageWidth > 700 ? 16 : (((pageWidth)/tabs.length/5))}px
-							style="font-family: Bungee, sans-serif;"
-							href="{href}">Jack Briggs</a>
-						</button>
-					</li>
-				{:else}
+				{#if name.toLowerCase()!=="home"}
 					<li>
 						<button class="dd-link-btn" onclick={() => expandedDropdown = false}>
 							<a 

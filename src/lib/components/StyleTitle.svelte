@@ -56,10 +56,9 @@
   .page-title img{
     /* border:2px green solid; */
     rotate: 8deg;
-    width: auto; 
     max-height: 200px;
-    height: 18vh;  
-    min-height: 120px;  
+    height: 30vw;  
+    min-height: 10vw;  
     display: block;
     padding: 0px 0px;
     justify-self: right;

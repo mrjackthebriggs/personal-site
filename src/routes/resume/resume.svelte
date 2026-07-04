@@ -6,8 +6,6 @@
   onMount(async () => {
     const module = await import("html2pdf.js");
     html2pdf = module.default;
-    
-    console.log("html2pdf loaded");
   });
 
   let resumeElement:HTMLElement;
@@ -53,14 +51,17 @@ a:hover{
   font-weight: 600;
 }
 button{
-  margin: 0px 40% 20px 40%;
-  width: 20vw;
+  display: block;
+  margin: 0 auto 20px auto;
+  width: min(20vw, 220px);
+  max-width: calc(100% - 2rem);
   height:70px;
   align-self: center;
   background-color: var(--primary-accent);
   color:white;
   border: 2px solid var(--grey);
   border-radius: 5px;
+  box-sizing: border-box;
 }
 button:hover{
   background-color: var(--primary-accent);
@@ -71,14 +72,18 @@ button:active{
   font-weight:700;
 }
 .tiltpage{
-  box-shadow: 5px 5px 8px var(--shadow);
+  box-shadow: 8px 8px 5px var(--shadow);
   border:2px var(--foreground) solid;
   border-radius: 3px;
-  margin:0px 30px;
+  margin:0px 4vw;
+  max-width: calc(100% - 4vw);
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 .resbody{
   padding:20px 40px 40px 40px;
   background-color: white;
+  box-sizing: border-box;
 }
 .resdiv{
   padding:20px 20px 20px 20px;
@@ -98,7 +103,7 @@ button:active{
 <!--style="rotate:{pageWidth/1000}deg;"-->
 <div
   class="tiltpage"
-  style="rotate:{pageWidth/1800}deg;"
+  style="rotate:{pageWidth/1900}deg;"
   in:fly={{y:25, x:200,duration:1200, delay:200}}
 >
   <div class="resbody"

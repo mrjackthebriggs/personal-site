@@ -27,7 +27,7 @@
 .copyright-text {
   margin-bottom: 10px;     /* Space between image and text */
   font-size: 0.85rem;  /* Smaller, subtle font size */
-  color: #666;         /* Muted gray text color */
+  color: var(--grey);         /* Muted gray text color */
   text-align: center;
   font-family: SpaceMono-reg, sans-serif;
   /* border: 2px solid green; */

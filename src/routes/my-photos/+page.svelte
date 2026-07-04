@@ -26,9 +26,7 @@
   #photo-gallery {
     /* display: flex; */
     /* justify-content: center; */
-    margin-top: 2px;
-    margin-left: min(60px, 16vw);
-    max-width: 70%;
+    margin: 50px 2vw;
     /* border: 2px solid red; */
   }
 </style>

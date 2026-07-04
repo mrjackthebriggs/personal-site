@@ -9,24 +9,32 @@
   let imgViewIndex = $state(0);
   let pics:[string,{ default: imgData }][] = $derived(Object.entries(images));
   let compWidth = $state(0);
-  let offset = $derived((imgViewIndex * (compWidth * 1.02)));
+  let offset = $derived((imgViewIndex * (compWidth * 1.04)));
 
 </script>
 
 <style>
   .container {
     display: grid;
-    grid-template-columns: 5% auto 5%;
+    grid-template-columns: auto minmax(0, 1fr) auto;
     align-items: center;
     align-content: start;
-    justify-content: start;
+    width: 100%;
+    max-width: 100%;
+    gap: 0.5rem;
+    box-sizing: border-box;
     height:auto;
     /* border: 2px solid pink; */
   }
 
   .track-wrapper {
     min-width: 0;
-    width: 100%;
+    width: min(100%, 320px);
+    max-width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     mask-image: linear-gradient(to right,
       rgba(0,0,0,0) 0%,
       rgba(0,0,0,1) 20%,
@@ -46,11 +54,13 @@
     min-width: 50px;
     min-height: 50px;
     box-shadow: 2px 2px 4px gray;
-    z-index: 1;
+    z-index: 2;
+    color: inherit;
+    cursor: pointer;
+    flex-shrink: 0;
   }
   .img-spacer{
-    width: 3vw; 
-    flex-shrink: 0;
+    display: none;
   }
 
   .track {
@@ -59,6 +69,7 @@
     align-items: center;
     transition: transform 0.4s ease;
     width: max-content;
+    margin-left: 0;
     /* border: 2px solid red; */
   }
 
@@ -71,7 +82,7 @@
 
   .photo {
     display: block;
-    width: 20vw;
+    width: min(20vw, 220px);
     max-width: 100%;
     height: auto;
     border: 2px solid lightgray;

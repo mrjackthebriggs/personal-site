@@ -6,12 +6,12 @@
 	import VideoBrowser from '$lib/components/YTBrowser.svelte';
 	import { onMount } from 'svelte';
 
-	const titleMaxLength = 60;
-	const descriptionMaxLength = 400;
-
 	let tileExpanded = $state(false);
 	let mediaWidth:number = $state(0);
 	let mounted = $state(false);
+
+	const titleMaxLength = 60;
+	const descriptionMaxLength = $derived(mediaWidth/2);
 
 	let { title, date, description, images, ytLink, link, delay = 0, flipped = false} = 
 		$props<{ title: string; date?: string; description: string; images?: Record<string, { default: imgData }>; ytLink?: string; link?: string; delay?: number; flipped?: boolean }>();
@@ -42,19 +42,18 @@
 		border: 2px black solid;
 		border-radius: 20px 30px 20px 5px;
 		box-shadow: 5px 5px var(--shadow);
-		padding: 40px 40px;
+		padding: 0px 5% 0px 10px;
 		background-color: var(--background);
 	}
 	.main-cont-shrunk {
 		margin-top: 40px;
 		margin-bottom: 40px;
 		margin-left: 10%;
-		max-width:70%;
+		margin-right: 20%;
 		transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);
 	}
 	.main-cont-exp {
 		margin: 40px 5%;
-		max-width:100%;
 		width:auto;
 		transition: all 1.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 	}
@@ -63,7 +62,7 @@
 		transform: translate(-2px, -2px);
 	}
 	.expand-button {
-		margin: 10px;
+		margin: 10px 4vw;
 		border: 4px black solid;
 		border-radius: 4px;
 		font-size: 18px;
@@ -82,22 +81,22 @@
 	.content {
 		display: flex;
 		margin: 0px;
+		padding: 0px;
 		flex-wrap: wrap;
 		justify-content: center;
 		align-content:start;
 		flex-direction: row-reverse;
+		min-width: 0;
 		/* border: 2px solid green; */
 	}
 	.content-exp{
-		padding: 10px;
 		flex-direction: column;
 		align-items: center;
 		flex-grow: 1;
 	}
 	.content-shrunk{
-		padding: 20px;
 		/* flex-direction: row; */
-		gap: 30px; /* add spacing between text and photo viewer */
+		padding:0px 10px; /* add spacing between text and photo viewer */
 	}
 	.media-content {
 		display: flex;
@@ -107,16 +106,33 @@
 		height:auto;
 		flex:1;
 		align-self: center;
+		min-width: 0;
+		overflow: hidden;
 		/* border: 2px solid blue; */
 	}
 	.text-content {
 		flex:1;
 		max-width: 100%;
+		min-width: 0;
+		margin: 10px 10px;
 		/* border: 2px solid red; */
 	}
 	.text-content>h1{
 		font-size: 36px;
 		margin-bottom: 10px;
+		word-break:normal;
+    overflow-wrap: break-word;
+    hyphens: auto;
+	}
+
+	@media (max-width: 900px) {
+		.content {
+			flex-direction: column !important;
+		}
+
+		.media-content {
+			width: 100% !important;
+		}
 	}
 </style>
 
@@ -127,7 +143,7 @@ in:fly={{ x:0, y: 40, duration: 1000, delay: delay }}
 out:fly={{ x:0, y: -40, duration: 1000, delay: delay }}
 >
 	<div 
-	bind:clientWidth=	{mediaWidth}
+	bind:clientWidth={mediaWidth}
 	class="content {tileExpanded ? 'content-exp' : 'content-shrunk'}"
 	style="flex-direction:{!tileExpanded ? flipped ? 'row-reverse' : 'row':''};"
 	>
@@ -144,7 +160,7 @@ out:fly={{ x:0, y: -40, duration: 1000, delay: delay }}
 			{/if}
 		</div>
 		<div class="media-content"
-		style="min-width:{tileExpanded ? '80%' : '40%'};"
+		style="width:{tileExpanded ? '100%' : '50%'};"
 		>
 			{#if images}
 				{#if tileExpanded}
