@@ -4,12 +4,6 @@
   import respic from "$lib/images/title-pictures/resumepic.png"
 </script>
 
-<style>
-  p{
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
-</style>
-
 <StyleTitle
 title="Resume"
 photo={respic}

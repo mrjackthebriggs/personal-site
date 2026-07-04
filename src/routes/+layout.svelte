@@ -241,8 +241,15 @@
     color: var(--foreground);
     transition: background-color 0.2s ease;
     margin: 0;
-    height: 100%;
+    min-height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+    scrollbar-gutter: stable;
   }
+
+	:global(html) {
+		overflow-y: scroll;
+	}
 </style>
 <nav>
 {#if colapsableNav}
