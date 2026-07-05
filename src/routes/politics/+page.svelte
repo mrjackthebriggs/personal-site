@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Component } from 'svelte';
-  import ArticleTile from './ArticleTile.svelte';
+  import ArticleTile from '$lib/components/ArticleTile.svelte';
   import StyleTitle from "$lib/components/StyleTitle.svelte";
   import polpic from '$lib/images/title-pictures/polpic.png';
   import type { articleData, ArticleModule } from '$lib/components/DataObjects';

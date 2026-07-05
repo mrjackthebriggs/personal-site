@@ -164,6 +164,15 @@
 		margin: 0;
 		padding: 0;
 	}
+	.article-image {
+		width: auto;
+		max-width: 100%;
+		max-height: 40vh;
+		min-width: 0;
+		height: auto;
+		object-fit: contain;
+		display: block;
+	}
 	  .md-page {
     padding: 0% 50%;
     display: flex;
@@ -215,10 +224,9 @@ in:fly={{ x:0, y: 40, duration: 1000, delay: delay }}
 				style="color: var(--grey); font-size: 0.8rem;"
 				><i>Published on {articleDate.toLocaleString()}</i></p>
 				<enhanced:img 
-				src={article.img} 
-				style="
-				max-width:100%;
-				"
+				src={article.img}
+				alt={article.title}
+				class="article-image"
 				/>
 		</div>
 		{/if}
