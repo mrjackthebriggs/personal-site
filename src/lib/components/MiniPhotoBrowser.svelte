@@ -24,6 +24,8 @@
     gap: 0.5rem;
     box-sizing: border-box;
     height:auto;
+    margin-right: 5px;
+    margin-bottom: 5px;
     /* border: 2px solid pink; */
   }
 
@@ -45,19 +47,27 @@
     /* border: 2px solid green; */
   }
 
-  button {
+  .mini-photo-btn {
     font-family: SpaceMono-reg, sans-serif;
-    border: 2px solid rgb(96, 96, 96);
+    border: 2px solid var(--grey);
     border-radius: 13px;
     height: 50px;
     width: 50px;
     min-width: 50px;
     min-height: 50px;
-    box-shadow: 2px 2px 4px gray;
+    box-shadow: 4px 4px 2px var(--shadow);
     z-index: 2;
-    color: inherit;
+    color: var(--foreground);
+    background-color: var(--primary-accent);
     cursor: pointer;
     flex-shrink: 0;
+    transition: all 0.6s cubic-bezier(0.25, 0.82, 0.165, 1);
+  }
+  .mini-photo-btn:hover {
+    border: 2px solid var(--secondary-accent);
+  }
+  .mini-photo-btn:active {
+    box-shadow: 1px 1px 2px var(--shadow);
   }
   .img-spacer{
     display: none;
@@ -85,7 +95,7 @@
     width: min(20vw, 220px);
     max-width: 100%;
     height: auto;
-    border: 2px solid lightgray;
+    border: 2px solid var(--foreground);
     border-radius: 5%;
     /* object-fit: contain; */
     /* border: 2px solid orange; */
@@ -96,6 +106,7 @@
 >
 
   <button
+    class="mini-photo-btn"
     style="grid-column:1"
     onclick={() => { if (imgViewIndex > 0) imgViewIndex -= 1 }}
   >Back</button>
@@ -118,6 +129,7 @@
   </div>
 
   <button
+    class="mini-photo-btn"
     style="grid-column:3"
     onclick={() => { if (imgViewIndex < pics.length - 1) imgViewIndex += 1 }}
   >Next</button>

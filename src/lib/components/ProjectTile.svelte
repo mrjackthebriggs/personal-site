@@ -62,7 +62,7 @@
 		transform: translate(-2px, -2px);
 	}
 	.expand-button {
-		margin: 10px 4vw;
+		margin: 10px 2vw 40px 2vw;
 		border: 4px black solid;
 		border-radius: 4px;
 		font-size: 18px;
