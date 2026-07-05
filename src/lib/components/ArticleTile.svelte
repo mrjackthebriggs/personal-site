@@ -5,12 +5,12 @@
 	import { onMount, tick } from 'svelte';
 	import type { Component } from 'svelte';
 
-	const titleMaxLength = 80;
-	const descriptionMaxLength = 400;
-
 	let tileExpanded = $state(false);
 	let mediaWidth:number = $state(0);
 	let mounted = $state(false);
+
+	const titleMaxLength = 60;
+	const descriptionMaxLength = $derived(mediaWidth/2);
 
 	type ArticleModule = { default: Component };
 	let {article, articleLoader, delay = 0, flipped = false} = 
@@ -75,19 +75,16 @@
 		margin-top: 40px;
 		margin-bottom: 40px;
 		margin-left: 10%;
-		max-width:70%;
+		margin-right: 20%;
 		transition: all 1s cubic-bezier(0.34, 1.56, 0.64, 1);
-		/* border: 2px solid blue; */
 	}
 	.main-cont-exp {
 		margin: 40px 5%;
-		max-width:100%;
 		width:auto;
 		transition: all 1.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-		/* border: 2px solid green; */
 	}
 	.main-cont:hover {
-		box-shadow: 24px 24px var(--light-shadow);
+		box-shadow: 16px 16px var(--light-shadow);
 		transform: translate(-2px, -2px);
 	}
 	.expand-button {
@@ -180,6 +177,16 @@
     align-items: center;   
     
   }
+	@media (max-width: 900px) {
+		.content {
+			flex-direction: column !important;
+		}
+
+		.media-content {
+			width: 100% !important;
+			max-width: 100%;
+		}
+	}
 </style>
 
 {#if mounted}

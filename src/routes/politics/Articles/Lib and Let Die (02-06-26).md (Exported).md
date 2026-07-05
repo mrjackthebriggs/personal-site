@@ -10,7 +10,7 @@ import VideoBrowser from '$lib/components/YTBrowser.svelte';
 import CaptionedImage from '$lib/components/CaptionedImage.svelte'
 </script>
 
-<div class="article">'
+<div class="article">
 
 # Lib and Let Die
 
